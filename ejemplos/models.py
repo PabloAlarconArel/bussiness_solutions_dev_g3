@@ -12,7 +12,7 @@ class Habilidad(models.Model):
         verbose_name_plural = 'Habilidades'
         ordering = ['nombre']   
     def __str__(self):
-        return self.name
+        return self.nombre
 
 class Heroe(models.Model):
     habilidad = models.ForeignKey(Habilidad, on_delete=models.CASCADE)
