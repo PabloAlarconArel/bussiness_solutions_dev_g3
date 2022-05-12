@@ -7,6 +7,12 @@ ejemplos_urlpatterns = [
     #endPoints
     path('ejemplos_habilidad_add_rest/', views.ejemplos_habilidad_add_rest),  
     path('ejemplos_habilidad_list_rest/', views.ejemplos_habilidad_list_rest),  
+    path('ejemplos_habilidad_get_element_rest/', views.ejemplos_habilidad_get_element_rest),  
+    path('ejemplos_habilidad_update_element_rest/', views.ejemplos_habilidad_update_element_rest), 
+    path('ejemplos_habilidad_del_element_rest/', views.ejemplos_habilidad_del_element_rest), 
+    path('ejemplos_habilidad_list_date_rest/', views.ejemplos_habilidad_list_date_rest), 
+    path('ejemplos_habilidad_list_range_date_rest/', views.ejemplos_habilidad_list_range_date_rest), 
+    path('ejemplos_habilidad_list_contains/', views.ejemplos_habilidad_list_contains), 
     ]
 
     
