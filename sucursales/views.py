@@ -1,5 +1,4 @@
 import json
-from django.db.models import Count, Avg, Q
 from django.shortcuts import render
 from rest_framework import generics, viewsets
 from rest_framework.decorators import (api_view, authentication_classes, permission_classes)
@@ -14,14 +13,14 @@ from sucursales.models import Sucursal
 def sucursales_sucursal_add_rest(request, format=None):    
     if request.method == 'POST':
         name = request.data['name'] 
-        email = request.data['email'] 
+        estado = request.data['estado'] 
         contact = request.data['contact']
         address = request.data['address']
-        if name == '' or email == '':
+        if name == '' or estado == '':
             return Response({'Msj': "Error los datos no pueder estar en blanco"})                         
         sucursal_save = Sucursal(
             name = name,
-            email = email,
+            estado = estado,
             contact = contact,
             address = address,
             )
@@ -36,26 +35,27 @@ def sucursales_sucursal_list_rest(request, format=None):
         sucursal_list =  Sucursal.objects.all().order_by('name')
         sucursal_json = []
         for s in sucursal_list:
-            sucursal_json.append({'Sucursal':s.name,'Email':s.email,'Direccion':s.address,'Contacto':s.contact})
+            sucursal_json.append({'Sucursal':s.name,'Estado':s.estado,'Direccion':s.address,'Contacto':s.contact})
         return Response({'Listado': sucursal_json})
     else:
         return Response({'Msj': "Error método no soportado"})
 
 @api_view(['POST'])
-def sucursales_sucursal_list_contains(request, format=None):
-    if request.method == 'POST':
-        search = request.data['search']
-        sucursal_list_count = Sucursal.objects.filter(Q(name__icontains=search)|Q(address__icontains=search)).count()
-        if sucursal_list_count > 0:
-            sucursal_list =   Sucursal.objects.filter(Q(name__icontains=search)|Q(address__icontains=search)).order_by('name')
-            sucursal_json = []
-            for h in sucursal_list:
-                sucursal_json.append({'Sucursal':h.name,'address':h.address})
-            return Response({'Listado': sucursal_json})
-        else:
-            return Response({'Msj': 'No existen habilidades que concuerden en estado o nombre con la cadena '+str(search)})
-    else:
-        return Response({'Msj': 'Error método no soportado'})
+def sucursales_sucursal_get_element_rest(request, format=None):
+     if request.method == 'POST':
+        sucursal_json = []
+        sucursal_id = request.data['sucursal_id']
+        sucursal_array = Sucursal.objects.get(pk = sucursal_id)
+        sucursal_json.append(
+            {
+                'id': sucursal_array.id,
+                'name': sucursal_array.name,
+                'address': sucursal_array.address,
+                'contact': sucursal_array.contact,
+                'estado': sucursal_array.estado})
+        return Response({ sucursal_array.name:sucursal_json })
+     else:
+        return Response({'Msj':"Error método no soportado"})
 
 @api_view(['POST'])
 def sucursales_sucursal_update_element_rest(request, format=None):
@@ -64,9 +64,9 @@ def sucursales_sucursal_update_element_rest(request, format=None):
         name = request.data['name']
         address = request.data['address']
         contact = request.data['contact']
-        email = request.data['email']
+        estado = request.data['estado']
         Sucursal.objects.filter(pk = sucursal_id).update(address = address)
-        Sucursal.objects.filter(pk = sucursal_id).update(email = email)
+        Sucursal.objects.filter(pk = sucursal_id).update(estado = estado)
         Sucursal.objects.filter(pk = sucursal_id).update(name = name)
         Sucursal.objects.filter(pk = sucursal_id).update(contact = contact)
         return Response({'Msj' : 'Sucursal editada con éxito'})    
