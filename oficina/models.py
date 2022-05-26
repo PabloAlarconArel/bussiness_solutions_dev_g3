@@ -12,6 +12,6 @@ class Oficina(models.Model):
     class Meta:
         verbose_name = 'oficina'
         verbose_name_plural = 'oficinas'
-        ordering = ['oficina_nombre']   
+        ordering = ['nombre']   
     def __str__(self):
         return self.nombre

@@ -14,10 +14,10 @@ from sala.models import Salas
 @api_view(['GET'])
 def sala_sala_list_rest(request, format=None):    
     if request.method == 'GET':
-        sala_list =  Salas.objects.all().order_by('nombre')
+        sala_list =  Salas.objects.all().order_by('name')
         sala_json = []
         for s in sala_list:
-            sala_json.append({'Sala':s.nombre,'tipo':s.tipo,'numero_piso':s.numero_piso})
+            sala_json.append({'Sala':s.name, 'capacidad':s.capacidad})
         return Response({'Listado': sala_json})
     else:
         return Response({'Msj': "Error método no soportado"})
@@ -25,16 +25,12 @@ def sala_sala_list_rest(request, format=None):
 @api_view(['POST'])
 def sala_salas_update_element_rest(request, format=None):
     if request.method == 'POST':
-        sucursal_id = request.data['sucursal_id']
-        nombre= request.data['nombre']
-        tipo = request.data['address']
-        numero_piso = request.data['contact']
-        email = request.data['email']
-        Salas.objects.filter(pk = sucursal_id).update(tipo = tipo)
-        Salas.objects.filter(pk = sucursal_id).update(email = email)
-        Salas.objects.filter(pk = sucursal_id).update(nombre = nombre)
-        Salas.objects.filter(pk = sucursal_id).update(numero_piso = numero_piso)
-        return Response({'Msj' : 'Sucursal editada con éxito'})    
+        id_piso = request.data['id_piso']
+        name= request.data['name']
+        capacidad= request.data['capacidad']
+        Salas.objects.filter(pk = id_piso).update(capacidad = capacidad)
+        Salas.objects.filter(pk = id_piso ).update(name = name)
+        return Response({'Msj' : 'sala editada con éxito'})    
     else:
         return Response({'Msj' : 'Error método no soportado'})
 

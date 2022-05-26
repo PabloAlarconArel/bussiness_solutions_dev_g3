@@ -13,10 +13,10 @@ from oficina.models import Oficina
 @api_view(['GET'])
 def oficina_oficina_list_rest(request, format=None):    
     if request.method == 'GET':
-        oficina_list =  Oficina.objects.all().order_by('nombre')
+        oficina_list =  Oficina.objects.all().order_by('name')
         oficina_json = []
         for s in oficina_list:
-            oficina_json.append({'Sala':s.nombre,'capacidad':s.capacidad,})
+            oficina_json.append({'Sala':s.name,'capacidad':s.capacidad,})
         return Response({'Listado': oficina_json})
     else:
         return Response({'Msj': "Error método no soportado"})
@@ -24,11 +24,11 @@ def oficina_oficina_list_rest(request, format=None):
 @api_view(['POST'])
 def oficina_oficina_update_element_rest(request, format=None):
     if request.method == 'POST':
-        piso_id = request.data['piso_id']
-        nombre = request.data['nombre']
+        id_piso = request.data['id_piso ']
+        name = request.data['name']
         capacidad =capacidad.data ['capacidad']
-        Oficina.objects.filter(pk = piso_id).update(nombre = nombre)
-        Oficina.objects.filter(pk = piso_id).update(capacidad = capacidad)
+        Oficina.objects.filter(pk = id_piso ).update(name = name)
+        Oficina.objects.filter(pk = id_piso ).update(capacidad = capacidad)
         return Response({'Msj' : 'oficina editada con éxito'})    
     else:
         return Response({'Msj' : 'Error método no soportado'})
