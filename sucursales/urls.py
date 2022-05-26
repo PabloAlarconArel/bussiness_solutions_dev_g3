@@ -8,7 +8,7 @@ sucursales_urlpatterns = [
     #endPoints
     path('sucursales_sucursal_add_rest/', views.sucursales_sucursal_add_rest),  
     path('sucursales_sucursal_list_rest/', views.sucursales_sucursal_list_rest),
-    path('sucursales_sucursal_det_elemnt_rest/', views.sucursales_sucursal_get_element_rest),
+    path('sucursales_sucursal_get_element_rest/', views.sucursales_sucursal_get_element_rest),
     path('sucursales_sucursal_update_element_rest/', views.sucursales_sucursal_update_element_rest),
     path('sucursales_sucursal_del_element_rest/', views.sucursales_sucursal_del_element_rest)
     ]
