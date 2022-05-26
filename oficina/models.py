@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group, User #importa los modelos Group y 
 
 class Oficina(models.Model):
     nombre_oficina = models.CharField(max_length=100, null=True, blank=True, verbose_name='nombre oficina')
-    capacidad_oficina = models.IntegerField(null=True, blank=True, verbose_name='Capacidad de la oficna')
+    capacidad_oficina = models.IntegerField(null=True, blank=True, default=0, verbose_name='Capacidad de la oficna')
     estado = models.CharField(max_length=100, null=True, blank=True, default='Activo', verbose_name='Estado')   
     created = models.DateTimeField(auto_now_add=True,verbose_name='Fecha Creación')
     updated = models.DateTimeField(auto_now=True,verbose_name='Fecha Actualización')

@@ -1,9 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import Group, User #importa los modelos Group y user
 
+
 class Salas(models.Model):
     nombre_sala_r = models.CharField(max_length=100, null=True, blank=True, verbose_name='Nombre sala de reunion')
-    capacidad_sala_r = models.CharField(max_length=100, null=True, blank=True, verbose_name='Capacidad')
+    capacidad_sala_r = models.CharField(max_length=100, null=True, default=0, blank=True, verbose_name='Capacidad')
     estado = models.CharField(max_length=100, null=True, blank=True, default='Activo', verbose_name='Estado')   
     created = models.DateTimeField(auto_now_add=True,verbose_name='Fecha Creación')
     updated = models.DateTimeField(auto_now=True,verbose_name='Fecha Actualización')
