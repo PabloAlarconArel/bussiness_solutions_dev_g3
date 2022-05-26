@@ -5,6 +5,6 @@ from rest_framework import routers
 from rest_framework.urlpatterns import format_suffix_patterns
 sala_urlpatterns = [
     #endPoints
-    path('sala_salas_list_contains/', views.sala_salas_list_contains),
+    path('sala_salas_list_rest/', views.sala_salas_list_rest),
     path('sala_salas_update_element_rest/', views.sala_salas_update_element_rest)
     ]

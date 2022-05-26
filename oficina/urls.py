@@ -5,6 +5,6 @@ from rest_framework import routers
 from rest_framework.urlpatterns import format_suffix_patterns
 oficina_urlpatterns = [
     #endPoints
-     path('oficina_oficina_list_contains/', views.oficina_oficina_list_contains),
+     path('oficina_oficina_list_rest/', views.oficina_oficina_list_rest),
     path('oficina_oficina_update_element_rest/', views.oficina_oficina_update_element_rest)
     ]

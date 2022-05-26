@@ -25,7 +25,7 @@ class Heroe(models.Model):
     class Meta:
         verbose_name = 'Heroe'
         verbose_name_plural = 'Heroes'
-        ordering = ['nombe_heroe']
+        ordering = ['nombre_heroe']
     
     def __str__(self):
         return self.nombe_heroe
