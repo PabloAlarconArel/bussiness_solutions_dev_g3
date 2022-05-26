@@ -16,7 +16,7 @@ class Habilidad(models.Model):
 
 class Heroe(models.Model):
     habilidad = models.ForeignKey(Habilidad, on_delete=models.CASCADE)
-    nombe_heroe = models.CharField(max_length=100, null=True, blank=True)
+    nombre_heroe = models.CharField(max_length=100, null=True, blank=True)
     nacionalidad_heroe = models.CharField(max_length=100, null=True, blank=True)
     state = models.CharField(max_length=100, null=True, blank=True, default='Activo')   
     created = models.DateTimeField(auto_now_add=True)
@@ -28,4 +28,4 @@ class Heroe(models.Model):
         ordering = ['nombre_heroe']
     
     def __str__(self):
-        return self.nombe_heroe
+        return self.nombre_heroe
