@@ -7,20 +7,24 @@ from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from oficina.models import Oficina
+from piso.models import Piso
 
 # Create your views here.
 @api_view(['POST'])
 def oficinas_oficina_add_rest(request, format=None):
     if request.method == 'POST':
+        piso = request.data['piso_id']
         nombre_oficina = request.data['nombre_oficina'] 
         capacidad_oficina = request.data['capacidad_oficina']
         estado = request.data['estado']
-        if nombre_oficina == ''or capacidad_oficina == '' or estado =='':
+        piso = Piso.objects.get(pk = piso)
+        if nombre_oficina == ''or capacidad_oficina == '' or estado =='' or piso == '':
             return Response({'Msj': "Error los datos no pueder estar en blanco"})
         oficina_save = Oficina(
                 nombre_oficina = nombre_oficina,
                 capacidad_oficina = capacidad_oficina,
                 estado = estado,
+                piso = piso, 
                 )
         oficina_save.save()
         return Response({'Msj': "La oficina ha sido creada exitosamente"})
@@ -33,7 +37,7 @@ def oficinas_oficina_list_rest(request, format=None):
         oficina_list =  Oficina.objects.all().order_by('nombre_oficina')
         oficina_json = []
         for o in oficina_list:
-            oficina_json.append({'Oficina':o.nombre_oficina,'capacidad oficina':o.capacidad_oficina,'Estado':o.estado,})
+            oficina_json.append({'piso':o.piso_id, 'Oficina':o.nombre_oficina,'capacidad oficina':o.capacidad_oficina,'Estado':o.estado,})
         return Response({'Listado': oficina_json})
     else:
         return Response({'Msj': "Error método no soportado"})

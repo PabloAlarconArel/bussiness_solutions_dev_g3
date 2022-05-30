@@ -6,20 +6,26 @@ from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from piso.models import Piso	
+from sucursales.models import Sucursal
+
+
 
 # Create your views here.
 @api_view(['POST'])
 def pisos_piso_add_rest(request, format=None):    
     if request.method == 'POST':
+        sucursal = request.data['sucursal_id']
         nombre_piso = request.data['nombre_piso']
         num_piso = request.data['num_piso'] 
-        tipo = request.data['tipo'] 
-        if num_piso == '' or tipo == '' or nombre_piso == '':
+        tipo = request.data['tipo']
+        sucursal = Sucursal.objects.get(pk = sucursal) 
+        if num_piso == '' or tipo == '' or nombre_piso == '' or sucursal =='':
             return Response({'Msj': "Error los datos no pueder estar en blanco"})                         
         piso_save = Piso(
             nombre_piso = nombre_piso,
             num_piso = num_piso,
             tipo = tipo,
+            sucursal = sucursal,
             )
         piso_save.save()
         return Response({'Msj': "Piso creado exitosamente"})
@@ -32,7 +38,7 @@ def pisos_piso_list_rest(request, format=None):
         piso_list =  Piso.objects.all().order_by('num_piso')
         piso_json = []
         for p in piso_list:
-            piso_json.append({'Numero de piso':p.num_piso,'Nombre Del Piso':p.nombre_piso,'tipo':p.tipo,})
+            piso_json.append({'sucursal':p.sucursal_id,'Numero de piso':p.num_piso,'Nombre Del Piso':p.nombre_piso,'tipo':p.tipo, 'estado':p.estado})
         return Response({'Listado': piso_json})
     else:
         return Response({'Msj': "Error método no soportado"})

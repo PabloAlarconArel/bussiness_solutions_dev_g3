@@ -1,8 +1,11 @@
+from tkinter import CASCADE
 from django.db import models
 from django.contrib.auth.models import Group, User #importa los modelos Group y user
+from piso.models import Piso
 # Create your models here.
 
 class Oficina(models.Model):
+    piso = models.ForeignKey(Piso,on_delete=CASCADE)
     nombre_oficina = models.CharField(max_length=100, null=True, blank=True, verbose_name='nombre oficina')
     capacidad_oficina = models.IntegerField(null=True, blank=True, default=0, verbose_name='Capacidad de la oficna')
     estado = models.CharField(max_length=100, null=True, blank=True, default='Activo', verbose_name='Estado')   
