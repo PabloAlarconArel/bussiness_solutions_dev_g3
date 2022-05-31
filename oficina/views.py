@@ -16,18 +16,21 @@ def oficinas_oficina_add_rest(request, format=None):
         piso = request.data['piso_id']
         nombre_oficina = request.data['nombre_oficina'] 
         capacidad_oficina = request.data['capacidad_oficina']
-        estado = request.data['estado']
-        piso = Piso.objects.get(pk = piso)
-        if nombre_oficina == ''or capacidad_oficina == '' or estado =='' or piso == '':
-            return Response({'Msj': "Error los datos no pueder estar en blanco"})
-        oficina_save = Oficina(
-                nombre_oficina = nombre_oficina,
-                capacidad_oficina = capacidad_oficina,
-                estado = estado,
-                piso = piso, 
-                )
-        oficina_save.save()
-        return Response({'Msj': "La oficina ha sido creada exitosamente"})
+        try:
+            piso = Piso.objects.get(pk = piso)
+            if nombre_oficina == ''or capacidad_oficina == '' or piso == '':
+                return Response({'Msj': "Error los datos no pueder estar en blanco"})
+            if not isinstance(capacidad_oficina, int):
+                return  Response({'Msj': "Error capacidad solo acepta numeros enteros"})
+            oficina_save = Oficina(
+                    nombre_oficina = nombre_oficina,
+                    capacidad_oficina = capacidad_oficina,
+                    piso = piso, 
+                    )
+            oficina_save.save()
+            return Response({'Msj': "La oficina ha sido creada exitosamente"})
+        except Piso.DoesNotExist:
+            return Response({'Msj': "Error el id de piso no existe"}) 
     else:
         return Response({'Msj': "Error método no soportado"})
 
@@ -52,7 +55,9 @@ def oficinas_oficina_update_element_rest(request, format=None):
         Oficina.objects.filter(pk = oficina_id ).update(nombre_oficina = nombre_oficina)
         Oficina.objects.filter(pk = oficina_id ).update(capacidad_oficina = capacidad_oficina)
         Oficina.objects.filter(pk = oficina_id ).update(estado = estado)
-        return Response({'Msj' : 'oficina editada con éxito'})    
+        if not isinstance(capacidad_oficina, int):
+            return  Response({'Msj': "Error capacidad solo acepta numeros enteros"})
+        return Response({'Msj' : 'Oficina actualizada con éxito'})    
     else:
         return Response({'Msj' : 'Error método no soportado'})
 

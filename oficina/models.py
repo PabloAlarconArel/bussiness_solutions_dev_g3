@@ -12,8 +12,8 @@ class Oficina(models.Model):
     created = models.DateTimeField(auto_now_add=True,verbose_name='Fecha Creación')
     updated = models.DateTimeField(auto_now=True,verbose_name='Fecha Actualización')
     class Meta:
-        verbose_name = 'oficina'
-        verbose_name_plural = 'oficinas'
+        verbose_name = 'Oficina'
+        verbose_name_plural = 'Oficinas'
         ordering = ['nombre_oficina']   
     def __str__(self):
         return self.nombre_oficina
