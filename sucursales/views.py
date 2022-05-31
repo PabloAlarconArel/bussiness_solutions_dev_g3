@@ -16,6 +16,14 @@ def sucursales_sucursal_add_rest(request, format=None):
         estado = request.data['estado'] 
         contact = request.data['contact']
         address = request.data['address']
+        if isinstance(name,int):
+            return Response({'Msj': "Error los datos son invalidos"})
+        if isinstance(estado,int):
+            return Response({'Msj': "Error los datos son invalidos"})
+        if isinstance(contact,int):
+            return Response({'Msj': "Error los datos son invalidos"})
+        if isinstance(address,int):
+            return Response({'Msj': "Error los datos son invalidos"})
         if name.isspace() or estado.isspace() or contact.isspace() or address.isspace():
             return Response({'Msj': "Error los datos no pueden ser espacios"})
         if name == '' or estado == '' or contact == '' or address == '':
@@ -77,6 +85,14 @@ def sucursales_sucursal_update_element_rest(request, format=None):
             address = request.data['address']
             contact = request.data['contact']
             estado = request.data['estado']
+            if isinstance(name,int):
+                return Response({'Msj': "Error los datos son invalidos"})
+            if isinstance(estado,int):
+                return Response({'Msj': "Error los datos son invalidos"})
+            if isinstance(contact,int):
+                return Response({'Msj': "Error los datos son invalidos"})
+            if isinstance(address,int):
+                return Response({'Msj': "Error los datos son invalidos"})
             if name.isspace() or estado.isspace() or contact.isspace() or address.isspace():
                 return Response({'Msj': "Error los datos no pueden ser espacios"})
             if name == '' or estado == '' or contact == '' or address == '':
