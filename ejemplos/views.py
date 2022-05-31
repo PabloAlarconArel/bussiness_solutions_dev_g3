@@ -1,14 +1,117 @@
 import json
+#nuevas importaciones 30-05-2022
+from django.contrib.auth.models import User, Group
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.shortcuts import render,redirect,get_object_or_404
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from registration.models import Profile
+#fin nuevas importaciones 30-05-2022
+
 from django.db.models import Count, Avg, Q
 from django.shortcuts import render
 from rest_framework import generics, viewsets
-from rest_framework.decorators import (api_view, authentication_classes, permission_classes)
+from rest_framework.decorators import (
+	api_view, authentication_classes, permission_classes)
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from ejemplos.models import Habilidad, Heroe 
 
-#rest crea habilidad
+
+
+@login_required
+def ejemplos_main(request):
+    profile = Profile.objects.get(user_id=request.user.id)
+    if profile.group_id != 1:
+        messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
+        return redirect('check_group_main')
+    template_name = 'ejemplos/ejemplos_main.html'
+    return render(request,template_name,{'profile':profile})
+
+@login_required
+def ejemplos_habilidad_add(request):
+    profile = Profile.objects.get(user_id=request.user.id)
+    if profile.group_id != 1:
+        messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
+        return redirect('check_group_main')
+    template_name = 'ejemplos/ejemplos_add.html'
+    return render(request,template_name,{'profile':profile})
+
+@login_required
+def ejemplos_habilidad_save(request):
+    profile = Profile.objects.get(user_id=request.user.id)
+    if profile.group_id != 1:
+        messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
+        return redirect('check_group_main')
+    if request.method == 'POST':
+        nombre = request.POST.get('nombre')
+        nivel = request.POST.get('nivel')        
+        if nombre == '' or nivel == '':
+            messages.add_message(request, messages.INFO, 'Debes ingresar toda la información')
+            return redirect('ejemplos_habilidad_add')
+        habilidad_save = Habilidad(
+            nombre = nombre,
+            nivel = nivel,
+            )
+        habilidad_save.save()
+        messages.add_message(request, messages.INFO, 'Habilidad ingresada con éxito')
+        return redirect('ejemplos_list_habilidades')
+    else:
+        messages.add_message(request, messages.INFO, 'Error en el método de envío')
+        return redirect('check_group_main')
+@login_required
+def ejemplos_habilidad_ver(request,habilidad_id):
+    profile = Profile.objects.get(user_id=request.user.id)
+    if profile.group_id != 1:
+        messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
+        return redirect('check_group_main')
+    habildad_data = Habilidad.objects.get(pk=habilidad_id)
+    template_name = 'ejemplos/ejemplos_habilidad_ver.html'
+    return render(request,template_name,{'profile':profile,'habildad_data':habildad_data})
+
+@login_required
+def ejemplos_list_habilidades(request,page=None,search=None):
+    profile = Profile.objects.get(user_id=request.user.id)
+    if profile.group_id != 1:
+        messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
+        return redirect('check_group_main')
+    if page == None:
+        page = request.GET.get('page')
+    else:
+        page = page
+    if request.GET.get('page') == None:
+        page = page
+    else:
+        page = request.GET.get('page') 
+    if search == None:
+        search = request.GET.get('search')
+    else:
+        search = search
+    if request.GET.get('search') == None:
+        search = search
+    else:
+        search = request.GET.get('search') 
+    if request.method == 'POST':
+        search = request.POST.get('search') 
+        page = None
+    h_list = []
+    if search == None or search == "None":
+        h_count = Habilidad.objects.filter(estado='Activo').count()
+        h_list_array = Habilidad.objects.filter(estado='Activo').order_by('nivel')
+        for h in h_list_array:
+            h_list.append({'id':h.id,'nombre':h.nombre,'nivel':h.nivel})
+    else:
+        h_count = Habilidad.objects.filter(estado='Activo').filter(nombre__icontains=search).count()
+        h_list_array = Habilidad.objects.filter(estado='Activo').filter(nombre__icontains=search).order_by('nombre')
+        for h in h_list_array:
+            h_list.append({'id':h.id,'nombre':h.nombre,'nivel':h.nivel})            
+    paginator = Paginator(h_list, 1) 
+    h_list_paginate= paginator.get_page(page)   
+    template_name = 'ejemplos/ejemplos_list_habilidades.html'
+    return render(request,template_name,{'template_name':template_name,'h_list_paginate':h_list_paginate,'paginator':paginator,'page':page})
+
+#ENDPOINT
 @api_view(['POST'])
 def ejemplos_habilidad_add_rest(request, format=None):    
     if request.method == 'POST':

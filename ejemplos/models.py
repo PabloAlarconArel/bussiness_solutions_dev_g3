@@ -12,11 +12,11 @@ class Habilidad(models.Model):
         verbose_name_plural = 'Habilidades'
         ordering = ['nombre']   
     def __str__(self):
-        return self.nombre
+        return self.name
 
 class Heroe(models.Model):
     habilidad = models.ForeignKey(Habilidad, on_delete=models.CASCADE)
-    nombre_heroe = models.CharField(max_length=100, null=True, blank=True)
+    nombe_heroe = models.CharField(max_length=100, null=True, blank=True)
     nacionalidad_heroe = models.CharField(max_length=100, null=True, blank=True)
     state = models.CharField(max_length=100, null=True, blank=True, default='Activo')   
     created = models.DateTimeField(auto_now_add=True)
@@ -25,7 +25,7 @@ class Heroe(models.Model):
     class Meta:
         verbose_name = 'Heroe'
         verbose_name_plural = 'Heroes'
-        ordering = ['nombre_heroe']
+        ordering = ['nombe_heroe']
     
     def __str__(self):
-        return self.nombre_heroe
+        return self.nombe_heroe
