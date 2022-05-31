@@ -13,7 +13,7 @@ from piso.models import Piso
 # Create your views here.
 
 @api_view(['POST'])
-def sala_sala_add_rest(request, format=None):    
+def salas_sala_add_rest(request, format=None):    
     if request.method == 'POST':
         piso = request.data['piso_id']
         nombre_sala_r = request.data['nombre_sala_r'] 
@@ -30,7 +30,7 @@ def sala_sala_add_rest(request, format=None):
                 piso = piso,
                 )
             sala_save.save()
-            return Response({'Msj': "Sala de reuniones creada"})
+            return Response({'Msj': "Sala de reuniones creada exitosamente"})
         except Piso.DoesNotExist:
             return Response({'Msj': "Error el id de piso no existe"})  
     else:
@@ -38,19 +38,19 @@ def sala_sala_add_rest(request, format=None):
 
 
 @api_view(['GET'])
-def sala_sala_list_rest(request, format=None):    
+def salas_sala_list_rest(request, format=None):    
     if request.method == 'GET':
         sala_list =  Sala.objects.all().order_by('nombre_sala_r')
         sala_json = []
         for s in sala_list:
-            sala_json.append({'piso':s.piso_id, 'Sala':s.nombre_sala_r, 'capacidad':s.capacidad_sala_r, 'estado':s.estado})
+            sala_json.append({'Piso':s.piso_id, 'Sala':s.nombre_sala_r, 'Capacidad':s.capacidad_sala_r, 'Estado':s.estado})
         return Response({'Listado Salas': sala_json})
     else:
         return Response({'Msj': "Error método no soportado"})
 
 
 @api_view(['POST'])
-def sala_sala_update_element_rest(request, format=None):
+def salas_sala_update_element_rest(request, format=None):
     if request.method == 'POST':
         sala_id = request.data['sala_id']
         nombre_sala_r= request.data['nombre_sala_r']
@@ -67,24 +67,25 @@ def sala_sala_update_element_rest(request, format=None):
 
 
 @api_view(['POST'])
-def sala_sala_get_element_rest(request, format=None):
+def salas_sala_get_element_rest(request, format=None):
      if request.method == 'POST':
         sala_json = []
         sala_id = request.data['sala_id']
         sala_array = Sala.objects.get(pk = sala_id)
         sala_json.append(
             {
-                'id': sala_array.id,
-                'nombre_sala_r': sala_array.nombre_sala_r,
-                'capacidad_sala_r': sala_array.capacidad_sala_r,
-                'estado': sala_array.estado})
+                'ID': sala_array.id,
+                'Piso ID': sala_array.piso_id,
+                'Nombre Sala': sala_array.nombre_sala_r,
+                'Capacidad Sala': sala_array.capacidad_sala_r,
+                'Estado': sala_array.estado})
         return Response({ sala_array.nombre_sala_r:sala_json })
      else:
         return Response({'Msj':"Error método no soportado"})
         
 
 @api_view(['POST'])
-def sala_sala_del_element_rest(request,format=None):
+def salas_sala_del_element_rest(request,format=None):
     if request.method =='POST':
         sala_id=request.data['sala_id']
         Sala.objects.filter(pk = sala_id).delete()

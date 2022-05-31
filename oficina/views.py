@@ -40,7 +40,7 @@ def oficinas_oficina_list_rest(request, format=None):
         oficina_list =  Oficina.objects.all().order_by('nombre_oficina')
         oficina_json = []
         for o in oficina_list:
-            oficina_json.append({'piso':o.piso_id, 'Oficina':o.nombre_oficina,'capacidad oficina':o.capacidad_oficina,'Estado':o.estado,})
+            oficina_json.append({'Piso':o.piso_id, 'Oficina':o.nombre_oficina,'Capacidad Oficina':o.capacidad_oficina,'Estado':o.estado,})
         return Response({'Listado': oficina_json})
     else:
         return Response({'Msj': "Error método no soportado"})
@@ -69,10 +69,11 @@ def oficinas_oficina_get_element_rest(request, format=None):
         oficina_array = Oficina.objects.get(pk = oficina_id)
         oficina_json.append(
             {
-                'id': oficina_array.id,
-                'nombre_piso': oficina_array.nombre_oficina,
-                'capacidad_oficina': oficina_array.capacidad_oficina,
-                'estado': oficina_array.estado})
+                'ID': oficina_array.id,
+                'Piso ID': oficina_array.piso_id,
+                'Nombre Oficina': oficina_array.nombre_oficina,
+                'Capacidad Oficina': oficina_array.capacidad_oficina,
+                'Estado': oficina_array.estado})
         return Response({ oficina_array.nombre_oficina:oficina_json })
 
 @api_view(['POST'])
