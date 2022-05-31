@@ -61,7 +61,7 @@ def sucursales_sucursal_get_element_rest(request, format=None):
                     'estado': sucursal_array.estado})
             return Response({ sucursal_array.name:sucursal_json })
         except Sucursal.DoesNotExist:
-            return Response({'Msj' : 'No existe sucursal para listar'})
+            return Response({'Msj' : 'No existe sucursal para mostrar'})
         except ValueError:
             return Response({'Msj':"Valor no soportado"})
      else:
