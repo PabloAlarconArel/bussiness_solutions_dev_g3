@@ -16,4 +16,4 @@ class Piso(models.Model):
         verbose_name_plural = 'Pisos'
         ordering = ['num_piso']   
     def __str__(self):
-        return self.num_piso
+        return str(self.num_piso)
