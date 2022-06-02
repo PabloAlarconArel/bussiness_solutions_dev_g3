@@ -116,9 +116,9 @@ def sucursales_sucursal_del_element_rest(request,format=None):
     if request.method =='POST':
         try:
             sucursal_id=request.data['sucursal_id']
-            sucursal_array = Sucursal.objects.get(pk=sucursal_id)
+            sucursal_array = Sucursal.objects.get(pk = sucursal_id)
             if sucursal_array:
-                Sucursal.objects.filter(pk=sucursal_id).delete()
+                Sucursal.objects.filter(pk = sucursal_id).delete()
             return Response({'Msj':'Sucursal eliminadad exitosamente'})
         except Sucursal.DoesNotExist:
             return Response({'Msj' : 'No existe sucursal para borrar'})
