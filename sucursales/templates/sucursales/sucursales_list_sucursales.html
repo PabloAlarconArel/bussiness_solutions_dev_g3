@@ -16,10 +16,13 @@
         <div class="my-auto d-flex flex-column flex-lg-row ms-lg-auto">
             <div class="feedback body--small normal"></div>
         </div>
+        <div class="d-flex justify-content-center mx-0-5--custom">
+            <a href="{% url 'sucursales_main' %}" class="button">Regresa</a>
+        </div>   
         <form method="post" action="" class='col-12 col-lg-6 input-container-search my-auto me-3'>
             {% csrf_token %}
             <input name="search" id="search" type="text" placeholder='Buscar nombre de sucursal'/>
-        <form>       
+        <form>              
     </div>
     <div class="table-container mt-5">
         <table class="table table-user">
@@ -79,7 +82,7 @@
                             {% endif %}
                         </ul>
                     </nav>
-                </div>
+                </div>           
             {% endif %}  
         <!-- Paginación -->    
     </div>
