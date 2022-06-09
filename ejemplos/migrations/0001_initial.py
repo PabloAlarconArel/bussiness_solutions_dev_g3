@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
             name='Heroe',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('nombe_heroe', models.CharField(blank=True, max_length=100, null=True)),
+                ('nombre_heroe', models.CharField(blank=True, max_length=100, null=True)),
                 ('nacionalidad_heroe', models.CharField(blank=True, max_length=100, null=True)),
                 ('state', models.CharField(blank=True, default='Activo', max_length=100, null=True)),
                 ('created', models.DateTimeField(auto_now_add=True)),
@@ -42,7 +42,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Heroe',
                 'verbose_name_plural': 'Heroes',
-                'ordering': ['nombe_heroe'],
+                'ordering': ['nombre_heroe'],
             },
         ),
     ]

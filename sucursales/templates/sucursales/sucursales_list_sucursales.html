@@ -18,7 +18,7 @@
         </div>
         <form method="post" action="" class='col-12 col-lg-6 input-container-search my-auto me-3'>
             {% csrf_token %}
-            <input name="search" id="search" type="text" placeholder='Buscar por ID reserva de trabajo'/>
+            <input name="search" id="search" type="text" placeholder='Buscar nombre de sucursal'/>
         <form>       
     </div>
     <div class="table-container mt-5">
@@ -35,12 +35,13 @@
             <tbody>
                 {% for h in h_list_paginate %}
                     <tr>
-                        <td>1</td>
-                        <td>Joaquin</td>
-                        <td>1234</td>
-                        <td>Jefe</td>
+                        <td>{{h.id}}</td>
+                        <td>{{h.name}}</td>
+                        <td>{{h.contact}}</td>
+                        <td>{{h.estado}}</td>
+                        <td>{{h.address}}</td>
                         <td>
-                            <a href="{% url 'ejemplos_habilidad_ver' h.id %}">Ver</a>
+                            <a href="{% url 'sucursales_sucursal_ver' h.id %}">Ver</a>
                         </td>
                     </tr>
                 {% endfor %}
