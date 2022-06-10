@@ -1,3 +1,4 @@
+from email.headerregistry import Address
 import json
 #nuevas importaciones 30-05-2022
 from django.contrib.auth.models import User, Group
@@ -45,8 +46,8 @@ def sucursales_sucursal_save(request):
     if request.method == 'POST':
         name = request.POST.get('nombre')
         address = request.POST.get('direccion')
-        contact = request.POST.get('contacto')  
-        estado = request.POST.get('estado')    
+        contact = request.POST.get('contacto')
+        estado = request.POST.get('estado')
         if name == '' or address == '' or contact == '' or estado == '' :
             messages.add_message(request, messages.INFO, 'Debes ingresar toda la información')
             return redirect('sucursales_sucursal_add')
@@ -62,6 +63,39 @@ def sucursales_sucursal_save(request):
     else:
         messages.add_message(request, messages.INFO, 'Error en el método de envío')
         return redirect('check_group_main')
+
+@login_required
+def sucursales_sucursal_delete(request,sucursal_id):
+    profile = Profile.objects.get(user_id=request.user.id)
+    if profile.group_id != 1:
+        messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
+        return redirect('check_group_main')
+    
+    Sucursal.objects.get(pk=sucursal_id).delete()
+    messages.add_message(request, messages.INFO, 'Sucursal borrada con éxito')
+    return redirect('sucursales_list_sucursales')
+
+@login_required
+def sucursales_sucursal_update(request):
+    profile = Profile.objects.get(user_id=request.user.id)
+    if profile.group_id != 1:
+        messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
+        return redirect('check_group_main')
+    if request.method == 'POST':
+        sucursal_id=request.POST['id']
+        name = request.POST['nombre']
+        address = request.POST['direccion']
+        contact= request.POST['contacto']
+        estado = request.POST['estado']
+        Sucursal.objects.filter(pk = sucursal_id).update(name = name)
+        Sucursal.objects.filter(pk = sucursal_id).update(address=address)
+        Sucursal.objects.filter(pk = sucursal_id).update(contact=contact)
+        Sucursal.objects.filter(pk = sucursal_id).update(estado = estado)
+        messages.add_message(request, messages.INFO, 'Sucursal ingresada con éxito')
+        return redirect('sucursales_list_sucursales')
+    else:
+        messages.add_message(request, messages.INFO, 'Error en el método de envío')
+        return redirect('check_group_main')       
 @login_required
 def sucursales_sucursal_ver(request,sucursal_id):
     profile = Profile.objects.get(user_id=request.user.id)
@@ -108,7 +142,7 @@ def sucursales_list_sucursales(request,page=None,search=None):
         h_list_array = Sucursal.objects.filter(name__icontains=search).order_by('name')
         for h in h_list_array:
             h_list.append({'id':h.id,'name':h.name,'estado':h.estado, 'contact':h.contact, 'address' :h.address})         
-    paginator = Paginator(h_list, 1) 
+    paginator = Paginator(h_list, 10) 
     h_list_paginate= paginator.get_page(page)   
     template_name = 'sucursales/sucursales_list_sucursales.html'
     return render(request,template_name,{'template_name':template_name,'h_list_paginate':h_list_paginate,'paginator':paginator,'page':page})

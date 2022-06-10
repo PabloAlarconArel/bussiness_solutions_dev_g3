@@ -45,6 +45,7 @@
                         <td>{{h.address}}</td>
                         <td>
                             <a href="{% url 'sucursales_sucursal_ver' h.id %}">Ver</a>
+                            <a href="{% url 'sucursales_sucursal_delete' h.id %}">Eliminar</a>
                         </td>
                     </tr>
                 {% endfor %}
