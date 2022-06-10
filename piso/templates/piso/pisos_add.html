@@ -1,0 +1,53 @@
+{% extends 'core/base_admin.html' %}
+{% load static %}
+{% block title %}{% endblock %}
+{% block content %}
+    {% block extra_css %}    
+    {% endblock extra_css %}    
+    <header class='mb-4'>
+        <h2 class='h2 medium text-blue'>Nuevo piso</h2>
+    </header>
+    <div class="col-md-11">
+        <div class="mb-3">
+            <div class="d-flex flex-column align-items-center align-items-lg-start">
+                <form method="post" action="{% url 'pisos_piso_save' %}">
+                    {% csrf_token %}
+                    <div class="col-12 col-lg-12 row row-cols-1 row-cols-md-1 g-2 p-lg-0-5">
+                        <div class="mb-0 col-md-12">
+                            <label for="category_name" class="form-label">ID Sucursal</label>
+                            <input type="text" class="form-control" name="sucursal_id" id="sucursal_id" placeholder="ID Sucursal" required>
+                            <div class="feedback body--small normal"></div>
+                        </div>
+                        <div class="mb-0 col-md-12">
+                            <label for="category_description" class="form-label">Nombre del piso</label>
+                            <input type="text" class="form-control" name="nombre_piso" id="nombre_piso" placeholder="Nombre" required>
+                            <div class="feedback body--small normal"></div>
+                        </div>
+                        <div class="mb-0 col-md-12">
+                            <label for="category_description" class="form-label">Numero de piso</label>
+                            <input type="text" class="form-control" name="num_piso" id="num_piso" placeholder="Numero piso" required>
+                            <div class="feedback body--small normal"></div>
+                        </div>
+                        <div class="mb-0 col-md-12">
+                            <label for="category_description" class="form-label">Tipo del piso</label>
+                            <input type="text" class="form-control" name="tipo" id="tipo" placeholder="Tipo" required>
+                            <div class="feedback body--small normal"></div>
+                        </div>
+                        <div class="mb-0 col-md-12">
+                            <div class="d-flex justify-content-center mb-2">
+                                <div class="d-flex justify-content-center mx-0-5--custom">
+                                    <button type="submit" class="button">Crear</button>
+                                </div>
+                                <div class="d-flex justify-content-center mx-0-5--custom">
+                                    <a href="{% url 'pisos_piso_main' %}" class="button">Regresa</a>
+                                </div>  
+                            </div>                                  
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% block extrajs %}    
+    {% endblock extrajs %}    
+{% endblock %}
