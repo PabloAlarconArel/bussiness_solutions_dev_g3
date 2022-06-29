@@ -1,4 +1,11 @@
+from asyncio.windows_events import NULL
 import json
+from django.contrib.auth.models import User, Group
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.shortcuts import render,redirect,get_object_or_404
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from registration.models import Profile
 from django.db.models import Count, Avg, Q
 from django.shortcuts import render
 from rest_framework import generics, viewsets
@@ -9,7 +16,108 @@ from rest_framework.views import APIView
 from oficina.models import Oficina
 from piso.models import Piso
 
-# Create your views here.
+
+@login_required
+def oficinas_main(request):
+    profile = Profile.objects.get(user_id=request.user.id)
+    if profile.group_id != 1:
+        messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
+        return redirect('check_group_main')
+    template_name = 'oficinas/oficinas_main.html'
+    return render(request,template_name,{'profile':profile})
+
+
+@login_required
+def oficinas_oficina_add(request):
+    profile = Profile.objects.get(user_id=request.user.id)
+    if profile.group_id != 1:
+        messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
+        return redirect('check_group_main')
+    template_name = 'oficinas/oficinas_add.html'
+    return render(request,template_name,{'profile':profile})
+
+
+@login_required
+def oficinas_oficina_save(request):
+    profile = Profile.objects.get(user_id=request.user.id)
+    if profile.group_id != 1:
+        messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
+        return redirect('check_group_main')
+    if request.method == 'POST':
+        piso_id = request.POST.get('piso_id')
+        nombre_oficina = request.POST.get('nombre_oficina')        
+        capacidad_oficina = request.POST.get('capacidad_oficina')     
+        piso = Piso.objects.get(pk = piso_id)
+        if nombre_oficina == '' or capacidad_oficina == '' or piso == '':
+            messages.add_message(request, messages.INFO, 'Debes ingresar toda la información')
+            return redirect('oficinas_oficina_add')
+        oficina_save = Oficina(
+            nombre_oficina = nombre_oficina,
+            capacidad_oficina = capacidad_oficina,
+            piso = piso,
+            )
+        oficina_save.save()
+        messages.add_message(request, messages.INFO, 'Oficina creada con éxito')
+        return redirect('oficinas_list_oficinas')
+    else:
+        messages.add_message(request, messages.INFO, 'Error en el método de envío')
+        return redirect('check_group_main')
+
+@login_required
+def oficinas_oficina_ver(request,oficina_id):
+    profile = Profile.objects.get(user_id=request.user.id)
+    if profile.group_id != 1:
+        messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
+        return redirect('check_group_main')
+    oficina_data = Oficina.objects.get(pk=oficina_id)
+    template_name = 'oficinas/oficinas_oficina_ver.html'
+    return render(request,template_name,{'profile':profile,'oficina_data':oficina_data})
+
+@login_required
+def oficinas_list_oficinas(request,page=None,search=None):
+    profile = Profile.objects.get(user_id=request.user.id)
+    if profile.group_id != 1:
+        messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
+        return redirect('check_group_main')
+    if page == None:
+        page = request.GET.get('page')
+    else:
+        page = page
+    if request.GET.get('page') == None:
+        page = page
+    else:
+        page = request.GET.get('page') 
+    if search == None:
+        search = request.GET.get('search')
+    else:
+        search = search
+    if request.GET.get('search') == None:
+        search = search
+    else:
+        search = request.GET.get('search') 
+    if request.method == 'POST':
+        search = request.POST.get('search') 
+        page = None
+    o_list = []
+    if search == None or search == "None":
+        o_count = Oficina.objects.filter(estado='Activo').count()
+        o_list_array = Oficina.objects.filter(estado='Activo').order_by('nombre_oficina')
+        for o in o_list_array:
+            o_list.append({'id':o.id,'piso_id':o.piso_id, 'nombre_oficina':o.nombre_oficina,'capacidad_oficina':o.capacidad_oficina, 'estado':o.estado})
+    else:
+        o_count = Oficina.objects.filter(estado='Activo').filter(nombre_oficina__icontains=search).count()
+        o_list_array = Oficina.objects.filter(estado='Activo').filter(nombre_oficina__icontains=search).order_by('nombre_oficina')
+        for o in o_list_array:
+            o_list.append({'id':o.id,'piso_id':o.piso_id,'nombre_oficina':o.nombre_oficina,'capacidad_oficina':o.capacidad_oficina,'estado':o.estado})            
+    paginator = Paginator(o_list, 1) 
+    o_list_paginate= paginator.get_page(page)   
+    template_name = 'oficinas/oficinas_list_oficinas.html'
+    return render(request,template_name,{'template_name':template_name,'o_list_paginate':o_list_paginate,'paginator':paginator,'page':page})
+
+
+
+
+#Endpoints.
 @api_view(['POST'])
 def oficinas_oficina_add_rest(request, format=None):
     if request.method == 'POST':

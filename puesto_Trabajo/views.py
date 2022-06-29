@@ -1,3 +1,4 @@
+from email.headerregistry import Address
 import json
 #nuevas importaciones 30-05-2022
 from django.contrib.auth.models import User, Group
@@ -16,8 +17,8 @@ from rest_framework.decorators import (
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from piso.models import Piso
 from puesto_Trabajo.models import Puesto
+from piso.models import Piso
 
 @login_required
 def puesto_Trabajo_main(request):
@@ -158,8 +159,8 @@ def puesto_trabajo_puesto_update_element_rest(request, format=None):
         nombre_puesto= request.data['nombre_puesto']
         capacidad_puesto = request.data['capacidad_puesto']
         estado = request.data['estado']
-        Puesto.objects.filter(pk = puesto_id).update(nombre_puesto= nombre_puesto)
-        Puesto.objects.filter(pk = puesto_id ).update(capacidad_puesto = capacidad_puesto)
+        Puesto.objects.filter(pk = puesto_id).update(nombre_puesto = nombre_puesto)
+        Puesto.objects.filter(pk = puesto_id ).update(capacidad_puesto= capacidad_puesto)
         Puesto.objects.filter(pk = puesto_id ).update(estado = estado)
         if not isinstance(capacidad_puesto, int):
             return  Response({'Msj': "Error capacidad solo acepta numeros enteros"})  
@@ -181,7 +182,7 @@ def puesto_trabajo_puesto_get_element_rest(request, format=None):
                 'Nombre Puesto de Trabajo': puesto_array.nombre_puesto,
                 'Capacidad Puesto de trabajo': puesto_array.capacidad_puesto,
                 'Estado': puesto_array.estado})
-        return Response({ puesto_array.nombre_puesto:puesto_json })
+        return Response({ puesto_array.nombre_puesto_r:puesto_json })
      else:
         return Response({'Msj':"Error método no soportado"})
         

@@ -5,7 +5,7 @@
     {% block extra_css %}    
     {% endblock extra_css %}    
     <header class='mb-5'>
-        <h2 class='h2 medium text-blue'>Sucursal</h2>
+        <h2 class='h2 medium text-blue'>Pisos</h2>
         <div class="d-flex flex-column flex-lg-row mt-2">
             <p class='body--normal text-gray'>
                 {% lorem 2 b random %}
@@ -17,35 +17,37 @@
             <div class="feedback body--small normal"></div>
         </div>
         <div class="d-flex justify-content-center mx-0-5--custom">
-            <a href="{% url 'sucursales_main' %}" class="button">Regresa</a>
+            <a href="{% url 'pisos_piso_main' %}" class="button">Regresa</a>
         </div>   
         <form method="post" action="" class='col-12 col-lg-6 input-container-search my-auto me-3'>
             {% csrf_token %}
-            <input name="search" id="search" type="text" placeholder='Buscar nombre de sucursal'/>
+            <input name="search" id="search" type="text" placeholder='Buscar numero de piso'/>
         <form>              
     </div>
     <div class="table-container mt-5">
         <table class="table table-user">
             <thead>
                 <tr>
+                    <th width="10%" scope="col">ID</th>
                     <th width="10%" scope="col">ID Sucursal</th>
-                    <th width="10%" scope="col">Nombre</th>
-                    <th width="12%" scope="col">contacto</th>
+                    <th width="10%" scope="col">Numero</th>
+                    <th width="12%" scope="col">Nombre</th>
+                    <th width="10%" scope="col">Tipo</th>
                     <th width="10%" scope="col">Estado</th>
-                    <th width="10%" scope="col">Direccion</th>
                 </tr>
             </thead>
             <tbody>
                 {% for h in h_list_paginate %}
                     <tr>
                         <td>{{h.id}}</td>
-                        <td>{{h.name}}</td>
-                        <td>{{h.contact}}</td>
+                        <td>{{h.sucursal_id}}</td>
+                        <td>{{h.num_piso}}</td>
+                        <td>{{h.nombre_piso}}</td>
+                        <td>{{h.tipo}}</td>
                         <td>{{h.estado}}</td>
-                        <td>{{h.address}}</td>
                         <td>
-                            <a href="{% url 'sucursales_sucursal_ver' h.id %}">Ver</a>
-                            <a href="{% url 'sucursales_sucursal_delete' h.id %}">Eliminar</a>
+                            <a href="{% url 'pisos_piso_ver' h.id %}">Ver</a>
+                            <a href="{% url 'pisos_piso_delete' h.id %}">Eliminar</a>
                         </td>
                     </tr>
                 {% endfor %}

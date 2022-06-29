@@ -5,7 +5,7 @@
     {% block extra_css %}    
     {% endblock extra_css %}    
     <header class='mb-5'>
-        <h2 class='h2 medium text-blue'>Sucursal</h2>
+        <h2 class='h2 medium text-blue'>Gestión de Oficinas</h2>
         <div class="d-flex flex-column flex-lg-row mt-2">
             <p class='body--normal text-gray'>
                 {% lorem 2 b random %}
@@ -16,36 +16,33 @@
         <div class="my-auto d-flex flex-column flex-lg-row ms-lg-auto">
             <div class="feedback body--small normal"></div>
         </div>
-        <div class="d-flex justify-content-center mx-0-5--custom">
-            <a href="{% url 'sucursales_main' %}" class="button">Regresa</a>
-        </div>   
         <form method="post" action="" class='col-12 col-lg-6 input-container-search my-auto me-3'>
             {% csrf_token %}
-            <input name="search" id="search" type="text" placeholder='Buscar nombre de sucursal'/>
-        <form>              
+            <input name="search" id="search" type="text" placeholder='Buscar por Oficina'/>
+        <form>       
     </div>
     <div class="table-container mt-5">
         <table class="table table-user">
             <thead>
                 <tr>
-                    <th width="10%" scope="col">ID Sucursal</th>
-                    <th width="10%" scope="col">Nombre</th>
-                    <th width="12%" scope="col">contacto</th>
-                    <th width="10%" scope="col">Estado</th>
-                    <th width="10%" scope="col">Direccion</th>
+                    <th width="10%" scope="col">ID Oficina</th>
+                    <th width="10%" scope="col">ID del Piso</th>
+                    <th width="10%" scope="col">Nombre Oficina</th>
+                    <th width="12%" scope="col">Capacidad Oficina</th>
+                    <th width="12%" scope="col">Estado Oficina</th>
+                    <th width="10%" scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                {% for h in h_list_paginate %}
+                {% for o in o_list_paginate %}
                     <tr>
-                        <td>{{h.id}}</td>
-                        <td>{{h.name}}</td>
-                        <td>{{h.contact}}</td>
-                        <td>{{h.estado}}</td>
-                        <td>{{h.address}}</td>
+                        <td>{{o.id}}</td>
+                        <td>{{o.piso_id}}</td>
+                        <td>{{o.nombre_oficina}}</td>
+                        <td>{{o.capacidad_oficina}}</td>
+                        <td>{{o.estado}}</td>
                         <td>
-                            <a href="{% url 'sucursales_sucursal_ver' h.id %}">Ver</a>
-                            <a href="{% url 'sucursales_sucursal_delete' h.id %}">Eliminar</a>
+                            <a href="{% url 'oficinas_oficina_ver' o.id %}">Ver</a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -56,9 +53,9 @@
                 <div class="d-flex">
                     <nav aria-label="Page navigation example" class="ms-auto">
                         <ul class="pagination pagination-table">
-                            {% if h_list_paginate.has_previous %}
+                            {% if o_list_paginate.has_previous %}
                                 <li class="page-item">
-                                    <a class="page-link" href="?page={{ h_list_paginate.previous_page_number}}&search={{search}}" aria-label="Previous">
+                                    <a class="page-link" href="?page={{ o_list_paginate.previous_page_number}}&search={{search}}" aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
@@ -68,13 +65,13 @@
                                 </li>                        
                             {% endif %}
                             {% for i in paginator.page_range %}
-                                <li class="page-item {% if h_list_paginate.number == i %}active{% endif %}">
+                                <li class="page-item {% if o_list_paginate.number == i %}active{% endif %}">
                                     <a class="page-link" href="?page={{ i }}&search={{search}}">{{ i }}</a>
                                 </li>                        
                             {% endfor %}
-                            {% if h_list_paginate.has_next %}
+                            {% if o_list_paginate.has_next %}
                                 <li class="page-item ">
-                                    <a class="page-link" href="?page={{ h_list_paginate.next_page_number }}&search={{search}}">&raquo;</a>
+                                    <a class="page-link" href="?page={{ o_list_paginate.next_page_number }}&search={{search}}">&raquo;</a>
                                 </li>
                             {% else %}
                                 <li class="page-item disabled">
@@ -83,7 +80,7 @@
                             {% endif %}
                         </ul>
                     </nav>
-                </div>           
+                </div>
             {% endif %}  
         <!-- Paginación -->    
     </div>

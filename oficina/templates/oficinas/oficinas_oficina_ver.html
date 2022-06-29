@@ -1,0 +1,52 @@
+{% extends 'core/base_admin.html' %}
+{% load static %}
+{% block title %}{% endblock %}
+{% block content %}
+    {% block extra_css %}    
+    {% endblock extra_css %}    
+    <header class='mb-4'>
+        <h2 class='h2 medium text-blue'>Ver Oficina</h2>
+    </header>
+    <div class="col-md-11">
+        <div class="mb-3">
+            <div class="d-flex flex-column align-items-center align-items-lg-start">
+                <form method="post" action="{% url 'oficinas_oficina_save' %}">
+                    {% csrf_token %}
+                    <div class="col-12 col-lg-12 row row-cols-1 row-cols-md-1 g-2 p-lg-0-5">
+                        <div class="mb-0 col-md-12">
+                            <label for="category_name" class="form-label">ID Piso</label>
+                            <input type="text" class="form-control" name="piso_id" id="piso_id" value="{{oficina_data.piso_id}}" placeholder="ID del Piso" readonly>
+                            <div class="feedback body--small normal"></div>
+                        </div>
+                        <br>
+                        <div class="mb-0 col-md-12">
+                            <label for="category_name" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" name="nombre_oficina" id="nombre_oficina" value="{{oficina_data.nombre_oficina}}" placeholder="Nombre Oficina" required>
+                            <div class="feedback body--small normal"></div>
+                        </div>
+                        <br>
+                        <div class="mb-0 col-md-12">
+                            <label for="category_description" class="form-label">Capacidad</label>
+                            <input type="text" class="form-control" name="capacidad_oficina" id="capacidad_oficina" value="{{oficina_data.capacidad_oficina}}" placeholder="Capacidad Oficina" required>
+                            <div class="feedback body--small normal"></div>
+                        </div>
+                        <br>
+                        <div class="mb-0 col-md-12">
+                            <div class="d-flex justify-content-center mb-2">
+                                <div class="d-flex justify-content-center mx-0-5--custom">
+                                    <button type="submit" class="button">Editar</button>
+                                </div>
+                                <div class="d-flex justify-content-center mx-0-5--custom">
+                                    <br>
+                                    <a href="{% url 'oficinas_list_oficinas' %}" class="button">Regresar</a>
+                                </div>  
+                            </div>                                  
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% block extrajs %}    
+    {% endblock extrajs %}    
+{% endblock %}

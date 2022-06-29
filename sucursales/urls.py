@@ -5,7 +5,8 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework import routers
 from rest_framework.urlpatterns import format_suffix_patterns
 sucursales_urlpatterns = [
-
+    path('sucursales_sucursal_delete/<sucursal_id>',views.sucursales_sucursal_delete,name="sucursales_sucursal_delete"),
+    path('sucursales_sucursal_update/',views.sucursales_sucursal_update,name="sucursales_sucursal_update"),
     path('sucursales_main/',views.sucursales_main,name="sucursales_main"),
     path('sucursales_sucursal_add/',views.sucursales_sucursal_add,name="sucursales_sucursal_add"),
     path('sucursales_sucursal_save/',views.sucursales_sucursal_save,name="sucursales_sucursal_save"),
