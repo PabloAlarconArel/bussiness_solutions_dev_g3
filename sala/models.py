@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group, User #importa los modelos Group y 
 from piso.models import Piso
 
 class Sala(models.Model):
-    piso = models.ForeignKey(Piso,on_delete=models.CASCADE) 
+    piso = models.ForeignKey(Piso,on_delete=CASCADE) 
     nombre_sala_r = models.CharField(max_length=100, null=True, blank=True, verbose_name='Nombre sala de reunion')
     capacidad_sala_r = models.IntegerField(null=True, default=0, blank=True, verbose_name='Capacidad')
     estado = models.CharField(max_length=100, null=True, blank=True, default='Activo', verbose_name='Estado')   
