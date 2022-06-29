@@ -5,7 +5,7 @@
     {% block extra_css %}    
     {% endblock extra_css %}    
     <header class='mb-4'>
-        <h2 class='h2 medium text-blue'>Nueva Habilidad</h2>
+        <h2 class='h2 medium text-blue'>Nueva Sucursal</h2>
     </header>
     <div class="col-md-11">
         <div class="mb-3">
@@ -14,13 +14,23 @@
                     {% csrf_token %}
                     <div class="col-12 col-lg-12 row row-cols-1 row-cols-md-1 g-2 p-lg-0-5">
                         <div class="mb-0 col-md-12">
-                            <label for="category_name" class="form-label">Nombre Habilidad</label>
-                            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre Habilidad" required>
+                            <label for="category_name" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre" required>
                             <div class="feedback body--small normal"></div>
                         </div>
                         <div class="mb-0 col-md-12">
-                            <label for="category_description" class="form-label">Nivel</label>
-                            <input type="text" class="form-control" name="nivel" id="nivel" placeholder="Nivel" required>
+                            <label for="category_description" class="form-label">Contacto</label>
+                            <input type="text" class="form-control" name="nivel" id="nivel" placeholder="contacto" required>
+                            <div class="feedback body--small normal"></div>
+                        </div>
+                        <div class="mb-0 col-md-12">
+                            <label for="category_description" class="form-label">Estado</label>
+                            <input type="text" class="form-control" name="nivel" id="nivel" placeholder="Estado" required>
+                            <div class="feedback body--small normal"></div>
+                        </div>
+                        <div class="mb-0 col-md-12">
+                            <label for="category_description" class="form-label">Direccion</label>
+                            <input type="text" class="form-control" name="nivel" id="nivel" placeholder="Direccion" required>
                             <div class="feedback body--small normal"></div>
                         </div>
                         <div class="mb-0 col-md-12">

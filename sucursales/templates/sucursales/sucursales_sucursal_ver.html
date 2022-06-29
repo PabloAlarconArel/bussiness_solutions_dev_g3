@@ -5,27 +5,37 @@
     {% block extra_css %}    
     {% endblock extra_css %}    
     <header class='mb-4'>
-        <h2 class='h2 medium text-blue'>Editar Reserva de trabajo</h2>
+        <h2 class='h2 medium text-blue'>Editar Sucursal</h2>
     </header>
     <div class="col-md-11">
         <div class="mb-3">
             <div class="d-flex flex-column align-items-center align-items-lg-start">
-                <form method="post" action="{% url 'ejemplos_habilidad_save' %}">
+                <form method="post" action="{% url 'sucursales_sucursal_update' %}">
                     {% csrf_token %}
                     <div class="col-12 col-lg-12 row row-cols-1 row-cols-md-1 g-2 p-lg-0-5">
                         <div class="mb-0 col-md-12">
+                            <label for="category_name" class="form-label">ID</label>
+                            <input type="text" class="form-control" name="id" id="id" value="{{sucursal_data.id}}" placeholder="" readonly>
+                            <div class="feedback body--small normal"></div>
+                        </div>                        
+                        <div class="mb-0 col-md-12">
                             <label for="category_name" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" name="nombre" id="nombre" value="Joaquin" placeholder="Nombre" required>
+                            <input type="text" class="form-control" name="nombre" id="nombre" value="{{sucursal_data.name}}" placeholder="" required>
                             <div class="feedback body--small normal"></div>
                         </div>
                         <div class="mb-0 col-md-12">
                             <label for="category_description" class="form-label">Estado</label>
-                            <input type="text" class="form-control" name="nivel" id="nivel" value="1234" placeholder="Codigo" required>
+                            <input type="text" class="form-control" name="estado" id="estado" value="{{sucursal_data.estado}}" placeholder="" required>
                             <div class="feedback body--small normal"></div>
                         </div>
                         <div class="mb-0 col-md-12">
                             <label for="category_description" class="form-label">Contacto</label>
-                            <input type="text" class="form-control" name="nivel" id="nivel" value="Jefe" placeholder="Cargo" required>
+                            <input type="text" class="form-control" name="contacto" id="contaco" value="{{sucursal_data.contact}}" placeholder="" required>
+                            <div class="feedback body--small normal"></div>
+                        </div>
+                        <div class="mb-0 col-md-12">
+                            <label for="category_description" class="form-label">Direccion</label>
+                            <input type="text" class="form-control" name="direccion" id="direccion" value="{{sucursal_data.address}}" placeholder="" required>
                             <div class="feedback body--small normal"></div>
                         </div>
                         <div class="mb-0 col-md-12">
@@ -34,10 +44,7 @@
                                     <button type="submit" class="button">Editar</button>
                                 </div>
                                 <div class="d-flex justify-content-center mx-0-5--custom">
-                                    <button type="submit" class="button">Eliminar</button>
-                                </div>
-                                <div class="d-flex justify-content-center mx-0-5--custom">
-                                    <a href="{% url 'ejemplos_list_habilidades' %}" class="button">Regresa</a>
+                                    <a href="{% url 'sucursales_list_sucursales' %}" class="button">Regresa</a>
                                 </div>  
                             </div>                                  
                         </div>

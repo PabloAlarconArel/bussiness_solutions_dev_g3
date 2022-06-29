@@ -2,18 +2,17 @@ from tkinter import CASCADE
 from django.db import models
 from django.contrib.auth.models import Group, User #importa los modelos Group y user
 from piso.models import Piso
-# Create your models here.
 
-class Oficina(models.Model):
-    piso = models.ForeignKey(Piso,on_delete=models.CASCADE)
-    nombre_oficina = models.CharField(max_length=100, null=True, blank=True, verbose_name='nombre oficina')
-    capacidad_oficina = models.IntegerField(null=True, blank=True, default=0, verbose_name='Capacidad de la oficna')
+class Puesto(models.Model):
+    piso = models.ForeignKey(Piso,on_delete=CASCADE) 
+    nombre_puesto_r = models.CharField(max_length=100, null=True, blank=True, verbose_name='Nombre puesto de trabajo')
+    capacidad_puesto_r = models.IntegerField(null=True, default=0, blank=True, verbose_name='Capacidad')
     estado = models.CharField(max_length=100, null=True, blank=True, default='Activo', verbose_name='Estado')   
     created = models.DateTimeField(auto_now_add=True,verbose_name='Fecha Creación')
     updated = models.DateTimeField(auto_now=True,verbose_name='Fecha Actualización')
     class Meta:
-        verbose_name = 'Oficina'
-        verbose_name_plural = 'Oficinas'
-        ordering = ['nombre_oficina']   
+        verbose_name = 'Puesto'
+        verbose_name_plural = 'Puestos'
+        ordering = ['nombre_puesto_r']   
     def __str__(self):
-        return self.nombre_oficina
+        return self.nombre_puesto_r

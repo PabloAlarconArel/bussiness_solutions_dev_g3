@@ -30,6 +30,6 @@ def check_profile(request):
         messages.add_message(request, messages.INFO, 'Hubo un error con su usuario, por favor contactese con los administradores')              
         return redirect('login')
     if profile.group_id == 1:        
-        return redirect('ejemplos_main')
+        return redirect('sucursales_main')
     else:
         return redirect('logout')
