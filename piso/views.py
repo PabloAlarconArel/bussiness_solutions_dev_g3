@@ -1,4 +1,5 @@
 import json
+import re
 #nuevas importaciones 30-05-2022
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
@@ -163,6 +164,14 @@ def pisos_piso_add_rest(request, format=None):
         num_piso = request.data['num_piso'] 
         tipo = request.data['tipo']
         sucursal = Sucursal.objects.get(pk = sucursal) 
+        if isinstance(nombre_piso,int):
+            return Response({'Msj': "Error los datos son invalidos"})
+        if not isinstance(num_piso,int):
+            return Response({'Msj': "Error los datos son invalidos"})
+        if isinstance(tipo,int):
+            return Response({'Msj': "Error los datos son invalidos"})
+        if nombre_piso.isspace() or tipo.isspace():
+            return Response({'Msj': "Error los datos no pueden ser espacios"})
         if num_piso == '' or tipo == '' or nombre_piso == '' or sucursal =='':
             return Response({'Msj': "Error los datos no pueder estar en blanco"})                         
         piso_save = Piso(
@@ -190,42 +199,72 @@ def pisos_piso_list_rest(request, format=None):
 @api_view(['POST'])
 def pisos_piso_update_element_rest(request, format=None):
     if request.method == 'POST':
-        nombre_piso = request.data['nombre_piso']
-        piso_id = request.data['piso_id']
-        num_piso = request.data['num_piso']
-        tipo = request.data['tipo']
-        estado = request.data['estado']
-        Piso.objects.filter(pk = piso_id).update(num_piso = num_piso)
-        Piso.objects.filter(pk = piso_id).update(estado = estado)
-        Piso.objects.filter(pk = piso_id).update(tipo = tipo)
-        Piso.objects.filter(pk = piso_id).update(nombre_piso = nombre_piso)
-        return Response({'Msj' : 'Piso editado con éxito'})    
+        try:
+            nombre_piso = request.data['nombre_piso']
+            piso_id = request.data['piso_id']
+            piso_array = Piso.objects.get(pk = piso_id) 
+            num_piso = request.data['num_piso']
+            tipo = request.data['tipo']
+            estado = request.data['estado']
+            if not isinstance(piso_id,int):
+                return Response({'Msj': "Error los datos son invalidos"})
+            if nombre_piso.isspace() or tipo.isspace() or estado.isspace():
+                return Response({'Msj': "Error los datos no pueden ser espacios"})
+            if nombre_piso == '' or piso_id == '' or num_piso == '' or tipo == '' or  estado =='':
+                return Response({'Msj': "Error los datos no pueder estar en blanco"})    
+            if piso_array:
+                Piso.objects.filter(pk = piso_id).update(num_piso = num_piso)
+                Piso.objects.filter(pk = piso_id).update(estado = estado)
+                Piso.objects.filter(pk = piso_id).update(tipo = tipo)
+                Piso.objects.filter(pk = piso_id).update(nombre_piso = nombre_piso)
+                return Response({'Msj' : 'Piso editado con éxito'})  
+        except Piso.DoesNotExist:
+            return Response({'Msj' : 'No existe este piso'})
+        except ValueError:
+            return Response({'Msj' : 'Valor no soportado'})
     else:
         return Response({'Msj' : 'Error método no soportado'})
 
 @api_view(['POST'])
 def pisos_piso_get_element_rest(request, format=None):
     if request.method == 'POST':
-        piso_json = []
-        piso_id = request.data['piso_id']
-        piso_array = Piso.objects.get(pk = piso_id)
-        piso_json.append(
-            {
-                'id': piso_array.id,
-                'nombre_piso': piso_array.nombre_piso,
-                'num_piso': piso_array.num_piso,
-                'tipo': piso_array.tipo,
-                'estado': piso_array.estado})
-        return Response({ piso_array.num_piso:piso_json })
+        try:
+            piso_json = []
+            piso_id = request.data['piso_id']
+            piso_array = Piso.objects.get(pk = piso_id)
+            if not isinstance(piso_id,int):
+                return Response({'Msj': "Error los datos son invalidos"})
+            if piso_array:
+                piso_json.append(
+                    {
+                        'id': piso_array.id,
+                        'nombre_piso': piso_array.nombre_piso,
+                        'num_piso': piso_array.num_piso,
+                        'tipo': piso_array.tipo,
+                        'estado': piso_array.estado})
+                return Response({ piso_array.num_piso:piso_json })
+        except Piso.DoesNotExist:
+            return Response({'Msj' : 'No existe este piso'})
+        except ValueError:
+            return Response({'Msj' : 'Valor no soportado'})
     else:
         return Response({'Msj':"Error método no soportado"})
 
 @api_view(['POST'])
 def pisos_piso_del_element_rest(request,format=None):
     if request.method =='POST':
-        piso_id=request.data['piso_id']
-        Piso.objects.filter(pk = piso_id).delete()
-        return Response({'Msj':'Piso eliminado con éxito'})
+        try:
+            piso_id=request.data['piso_id']
+            piso_array = Piso.objects.get(pk = piso_id)
+            if not isinstance(piso_id,int):
+                return Response({'Msj': "Error los datos son invalidos"})
+            if piso_array: 
+                Piso.objects.filter(pk = piso_id).delete()
+                return Response({'Msj':'Piso eliminado con éxito'})
+        except Piso.DoesNotExist:
+            return Response({'Msj' : 'No existe este piso'})
+        except ValueError:
+            return Response({'Msj' : 'Valor no soportado'})
     else:
         return Response({'Msj':'Error método no soportado'})
 
