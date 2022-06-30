@@ -46,6 +46,7 @@
                         <td>  {{h.estado}}</td>
                         <td>
                             <a href="{% url 'puesto_Trabajo_puesto_ver' h.id %}">Ver</a>
+                            <a href="{% url 'puesto_Trabajo_puesto_delete' h.id %}">Eliminar</a>
                         </td>
                     </tr>
                 {% endfor %}

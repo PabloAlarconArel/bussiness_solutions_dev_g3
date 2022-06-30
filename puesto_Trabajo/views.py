@@ -72,14 +72,14 @@ def puesto_Trabajo_puesto_update(request):
         messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
         return redirect('check_group_main')
     if request.method == 'POST':
-        piso_id = request.POST['id']
+        piso_id = request.data['piso_id']
         puesto_id = request.data['puesto_id']
         nombre_puesto= request.data['nombre_puesto']
         capacidad_puesto = request.data['capacidad_puesto']
-        estado = request.data['estado']
+        Piso.objects.filter(pk = piso_id).update(nombre_puesto = nombre_puesto)
+        Piso.objects.filter(pk = piso_id ).update(capacidad_puesto= capacidad_puesto)
         Puesto.objects.filter(pk = puesto_id).update(nombre_puesto = nombre_puesto)
         Puesto.objects.filter(pk = puesto_id ).update(capacidad_puesto= capacidad_puesto)
-        Puesto.objects.filter(pk = puesto_id ).update(estado = estado)
         messages.add_message(request, messages.INFO, 'Puesto actualizado con éxito')
         return redirect('puesto_Trabajo_list_puesto_Trabajo')
     else:
