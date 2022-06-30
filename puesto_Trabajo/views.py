@@ -45,16 +45,19 @@ def puesto_Trabajo_puesto_save(request):
         messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
         return redirect('check_group_main')
     if request.method == 'POST':
-        nombre_puesto = request.POST.get('nombre puesto')
-        capacidad_puesto = request.POST.get('capacidad puesto') 
-        estado = request.POST.get('estado')    
-        if nombre_puesto == '' or capacidad_puesto == '' or estado == '' :
+        piso_id = request.POST.get('piso_id')
+        nombre_puesto = request.POST.get('nombre_puesto')
+        capacidad_puesto = request.POST.get('capacidad_puesto') 
+        estado = request.POST.get('estado') 
+        piso = Piso.objects.get(pk = piso_id)   
+        if nombre_puesto == '' or capacidad_puesto == '' or estado == '' or piso == '':
             messages.add_message(request, messages.INFO, 'Debes ingresar toda la información')
             return redirect('puesto_Trabajo_puesto_add')
         puesto_save = Puesto(
             nombre_puesto = nombre_puesto,
             capacidad_puesto = capacidad_puesto,
-            estado = estado
+            estado = estado,
+            piso = piso, 
             )
         puesto_save.save()
         messages.add_message(request, messages.INFO, 'Puesto de Trabajo ingresado con éxito')
@@ -74,7 +77,7 @@ def puesto_Trabajo_puesto_ver(request,puesto_id):
     return render(request,template_name,{'profile':profile,'puesto_data':puesto_data})
 
 @login_required
-def Puesto_Trabajo_list_puesto_Trabajo(request,page=None,search=None):
+def puesto_Trabajo_list_puesto_Trabajo(request,page=None,search=None):
     profile = Profile.objects.get(user_id=request.user.id)
     if profile.group_id != 1:
         messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
@@ -103,7 +106,7 @@ def Puesto_Trabajo_list_puesto_Trabajo(request,page=None,search=None):
         h_count = Puesto.objects.count()
         h_list_array = Puesto.objects.order_by('name')
         for h in h_list_array:
-            h_list.append({'id':h.id,'puesto_trabajo':h.puesto_trabajo,'estado':h.estado, 'capacidad_puesto':h.capacidad_puesto})
+            h_list.append({'id':h.id, 'piso_id':h.piso_id, 'puesto_trabajo':h.puesto_trabajo,'estado':h.estado, 'capacidad_puesto':h.capacidad_puesto})
     else:
         h_count =  Puesto.objects.filter(name__icontains=search).count()
         h_list_array = Puesto.objects.filter(name__icontains=search).order_by('name')
@@ -111,7 +114,7 @@ def Puesto_Trabajo_list_puesto_Trabajo(request,page=None,search=None):
             h_list.append({'id':h.id,'puesto_trabajo':h.puesto_trabajo,'estado':h.estado, 'capacidad_puesto':h.capacidad_puesto})        
     paginator = Paginator(h_list, 1) 
     h_list_paginate= paginator.get_page(page)   
-    template_name = 'Puesto_Trabajo/Puesto_Trabajo_list_puesto_Trabajo.html'
+    template_name = 'puesto_Trabajo/puesto_Trabajo_list_puestoTrabajo.html'
     return render(request,template_name,{'template_name':template_name,'h_list_paginate':h_list_paginate,'paginator':paginator,'page':page})
 
 
@@ -122,14 +125,14 @@ def puesto_trabajo_puesto_add_rest(request, format=None):
         nombre_puesto= request.data['nombre_puesto'] 
         capacidad_puesto= request.data['capacidad_puesto'] 
         try:
-            piso = Piso.objects.get(pk = piso)
+            piso =Piso.objetcts.get(pk=piso)
             if nombre_puesto == '' or capacidad_puesto == '' or piso == '':
                 return Response({'Msj': "Error los datos no pueder estar en blanco"})   
             if not isinstance(capacidad_puesto, int):
                 return  Response({'Msj': "Error capacidad solo acepta numeros enteros"})                    
             puesto_save = Puesto(
-                nombre_puesto_ = nombre_puesto,
-                capacidad_puesto_ = capacidad_puesto,
+                nombre_puesto = nombre_puesto,
+                capacidad_puesto = capacidad_puesto,
                 piso = piso,
                 )
             puesto_save.save()
@@ -182,7 +185,7 @@ def puesto_trabajo_puesto_get_element_rest(request, format=None):
                 'Nombre Puesto de Trabajo': puesto_array.nombre_puesto,
                 'Capacidad Puesto de trabajo': puesto_array.capacidad_puesto,
                 'Estado': puesto_array.estado})
-        return Response({ puesto_array.nombre_puesto_r:puesto_json })
+        return Response({ puesto_array.nombre_puesto:puesto_json })
      else:
         return Response({'Msj':"Error método no soportado"})
         
