@@ -5,7 +5,7 @@
     {% block extra_css %}    
     {% endblock extra_css %}    
     <header class='mb-5'>
-        <h2 class='h2 medium text-blue'>Puesto De Trabajo</h2>
+        <h2 class='h2 medium text-blue'>Gestión de Puesto De Trabajo</h2>
         <div class="d-flex flex-column flex-lg-row mt-2">
             <p class='body--normal text-gray'>
                 {% lorem 2 b random %}
@@ -28,22 +28,24 @@
         <table class="table table-user">
             <thead>
                 <tr>
-                    <th width="10%" scope="col">ID Piso</th>
+                    <th width="10%" scope="col">ID Puesto</th>
+                    <th width="10%" scope="col">ID del Piso</th>
                     <th width="10%" scope="col">Nombre</th>
                     <th width="12%" scope="col">Capacidad</th>
                     <th width="10%" scope="col">Estado</th>
+                    <th width="10%" scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 {% for h in h_list_paginate %}
                     <tr>
-                        <td>{{h.id}}</td>
-                        <td>{{h.name}}</td>
-                        <td>{{h.capacidad}}</td>
-                        <td>{{h.estado}}</td>
+                        <td>  {{h.id}}</td>
+                        <td>  {{h.piso_id}}</td>
+                        <td>  {{h.nombre_puesto}}</td>
+                        <td>  {{h.capacidad_puesto}}</td>
+                        <td>  {{h.estado}}</td>
                         <td>
-                            <a href="{% url 'puesto_Trabajo_puesto_Trabajo_ver' h.id %}">Ver</a>
-                            <a href="{% url 'puesto_Trabajo_puesto_delete' h.id %}">Eliminar</a>
+                            <a href="{% url 'puesto_Trabajo_puesto_ver' h.id %}">Ver</a>
                         </td>
                     </tr>
                 {% endfor %}

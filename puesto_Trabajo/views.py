@@ -29,6 +29,7 @@ def puesto_Trabajo_main(request):
     template_name = 'puesto_Trabajo/puesto_Trabajo_main.html'
     return render(request,template_name,{'profile':profile})
 
+
 @login_required
 def puesto_Trabajo_puesto_add(request):
     profile = Profile.objects.get(user_id=request.user.id)
@@ -48,15 +49,13 @@ def puesto_Trabajo_puesto_save(request):
         piso_id = request.POST.get('piso_id')
         nombre_puesto = request.POST.get('nombre_puesto')
         capacidad_puesto = request.POST.get('capacidad_puesto') 
-        estado = request.POST.get('estado') 
         piso = Piso.objects.get(pk = piso_id)   
-        if nombre_puesto == '' or capacidad_puesto == '' or estado == '' or piso == '':
+        if nombre_puesto == '' or capacidad_puesto == ''  or piso == '':
             messages.add_message(request, messages.INFO, 'Debes ingresar toda la información')
             return redirect('puesto_Trabajo_puesto_add')
         puesto_save = Puesto(
             nombre_puesto = nombre_puesto,
             capacidad_puesto = capacidad_puesto,
-            estado = estado,
             piso = piso, 
             )
         puesto_save.save()
@@ -65,6 +64,38 @@ def puesto_Trabajo_puesto_save(request):
     else:
         messages.add_message(request, messages.INFO, 'Error en el método de envío')
         return redirect('check_group_main')
+
+@login_required
+def puesto_Trabajo_puesto_update(request):
+    profile = Profile.objects.get(user_id=request.user.id)
+    if profile.group_id != 1:
+        messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
+        return redirect('check_group_main')
+    if request.method == 'POST':
+        piso_id = request.POST['id']
+        puesto_id = request.data['puesto_id']
+        nombre_puesto= request.data['nombre_puesto']
+        capacidad_puesto = request.data['capacidad_puesto']
+        estado = request.data['estado']
+        Puesto.objects.filter(pk = puesto_id).update(nombre_puesto = nombre_puesto)
+        Puesto.objects.filter(pk = puesto_id ).update(capacidad_puesto= capacidad_puesto)
+        Puesto.objects.filter(pk = puesto_id ).update(estado = estado)
+        messages.add_message(request, messages.INFO, 'Puesto actualizado con éxito')
+        return redirect('puesto_Trabajo_list_puesto_Trabajo')
+    else:
+        messages.add_message(request, messages.INFO, 'Error en el método de envío')
+        return redirect('check_group_main')
+
+@login_required
+def puesto_Trabajo_puesto_delete(request,puesto_id):
+    profile = Profile.objects.get(user_id=request.user.id)
+    if profile.group_id != 1:
+        messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
+        return redirect('check_group_main')
+    
+    Puesto.objects.get(pk=puesto_id).delete()
+    messages.add_message(request, messages.INFO, 'Puesto borrado con éxito')
+    return redirect('puesto_Trabajo_list_puesto_Trabajo')
 
 @login_required
 def puesto_Trabajo_puesto_ver(request,puesto_id):
@@ -103,18 +134,18 @@ def puesto_Trabajo_list_puesto_Trabajo(request,page=None,search=None):
         page = None
     h_list = []
     if search == None or search == "None":
-        h_count = Puesto.objects.count()
-        h_list_array = Puesto.objects.order_by('name')
+        h_count = Puesto.objects.filter(estado='Activo').count()
+        h_list_array = Puesto.objects.filter(estado='Activo').order_by('nombre_puesto')
         for h in h_list_array:
-            h_list.append({'id':h.id, 'piso_id':h.piso_id, 'puesto_trabajo':h.puesto_trabajo,'estado':h.estado, 'capacidad_puesto':h.capacidad_puesto})
+            h_list.append({'id':h.id, 'piso_id':h.piso_id, 'nombre_puesto':h.nombre_puesto, 'capacidad_puesto':h.capacidad_puesto, 'estado':h.estado})
     else:
-        h_count =  Puesto.objects.filter(name__icontains=search).count()
-        h_list_array = Puesto.objects.filter(name__icontains=search).order_by('name')
+        h_count = Puesto.objects.filter(estado='Activo').filter(nombre_puesto__icontains=search).count()
+        h_list_array = Puesto.objects.filter(estado='Activo').filter(nombre_puesto__icontains=search).order_by('nombre_puesto')
         for h in h_list_array:
-            h_list.append({'id':h.id,'puesto_trabajo':h.puesto_trabajo,'estado':h.estado, 'capacidad_puesto':h.capacidad_puesto})        
-    paginator = Paginator(h_list, 1) 
+            h_list.append({'id':h.id, 'piso_id':h.piso_id, 'nombre_puesto':h.nombre_puesto, 'capacidad_puesto':h.capacidad_puesto, 'estado':h.estado})        
+    paginator = Paginator(h_list, 5) 
     h_list_paginate= paginator.get_page(page)   
-    template_name = 'puesto_Trabajo/puesto_Trabajo_list_puestoTrabajo.html'
+    template_name = 'puesto_Trabajo/puesto_Trabajo_list_puesto_Trabajo.html'
     return render(request,template_name,{'template_name':template_name,'h_list_paginate':h_list_paginate,'paginator':paginator,'page':page})
 
 

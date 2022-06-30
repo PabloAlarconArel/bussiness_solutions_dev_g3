@@ -14,23 +14,27 @@
                     {% csrf_token %}
                     <div class="col-12 col-lg-12 row row-cols-1 row-cols-md-1 g-2 p-lg-0-5">
                         <div class="mb-0 col-md-12">
-                            <label for="category_name" class="form-label">ID</label>
-                            <input type="text" class="form-control" name="id" id="id" value="{{pueto_Trabajo_data.id}}" placeholder="" readonly>
+                            <label for="category_name" class="form-label">ID {{puesto_data.piso_id}}</label>
+
+                        </div>   
+                        <div class="mb-0 col-md-12">
+                            <label for="category_name" class="form-label">ID Puesto</label>
+                            <input type="text" class="form-control" name="id" id="id" value="{{puesto_data.id}}" placeholder="" readonly>
                             <div class="feedback body--small normal"></div>
-                        </div>                        
+                        </div>                     
                         <div class="mb-0 col-md-12">
                             <label for="category_name" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" name="nombre" id="nombre" value="{puesto_Trabajo_data.name}}" placeholder="" required>
+                            <input type="text" class="form-control" name="nombre_puesto" id="nombre_puesto" value="{{puesto_data.nombre_puesto}}" placeholder="" required>
                             <div class="feedback body--small normal"></div>
                         </div>
                         <div class="mb-0 col-md-12">
                             <label for="category_name" class="form-label">Capacidad</label>
-                            <input type="text" class="form-control" name="nombre" id="nombre" value="{puesto_Trabajo_data.name}}" placeholder="" required>
+                            <input type="text" class="form-control" name="capacidad_puesto" id="capacidad_puesto" value="{{puesto_data.capacidad_puesto}}" placeholder="" required>
                             <div class="feedback body--small normal"></div>
                         </div>
                         <div class="mb-0 col-md-12">
-                            <label for="category_description" class="form-label">Estado</label>
-                            <input type="text" class="form-control" name="estado" id="estado" value="{{puesto_Trabajo_data.estado}}" placeholder="" required>
+                            <label for="category_name" class="form-label">Estado</label>
+                            <input type="text" class="form-control" name="Estado" id="Estado" value="{{puesto_data.Estado}}" placeholder="" required>
                             <div class="feedback body--small normal"></div>
                         </div>
                         <div class="mb-0 col-md-12">
