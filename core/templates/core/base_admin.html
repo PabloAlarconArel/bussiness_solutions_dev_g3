@@ -9,7 +9,9 @@
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
         <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
         <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Round" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" rel="stylesheet">
@@ -39,7 +41,7 @@
                     </div>
                 </div>
                 <a href="">
-                    <img class="logo my-2" src="{% static 'assets/svg/logos.svg' %}" alt="logos"/>
+                    <img class="logo my-2" src="{% static 'assets/svg/award1.svg' %}" alt="logos"/>
                 </a>
                 <div style="display: flex; flex-direction: column;align-items: center;">
                     <div class="avatar-normal-container">
@@ -48,16 +50,16 @@
                 </div>
             </header>
             <div class='menu'>
-                <!--=== Menu 1 ===-->  
+                <!--=== Sucursal ===-->  
                 {% if template_name == '' %}
                     <a href="" class='item active'>
                 {% else %}
                     <a href="" class='item'>
                 {% endif %}
-                    <span class="material-icons-outlined">
-                        calendar_month
+                    <span class="material-symbols-outlined">
+                        apartment
                     </span>
-                    <p class='body--small'>Menu 1</p>
+                    <p class='body--small'>Sucursal</p>
                 </a>
                 <!--=== Menu 2 ===-->  
                 {% if template_name == '' %}
@@ -65,10 +67,10 @@
                 {% else %}
                     <a href="" class='item'>
                 {% endif %}
-                    <span class="material-icons-outlined">
-                        manage_accounts
+                    <span class="material-symbols-outlined">
+                    business_center
                     </span>
-                    <p class='body--small'>Menu 2</p>
+                    <p class='body--small'>Puesto De Trabajo</p>
                 </a>                 
             </div>
             <div class='side-bar-footer mb-5'>
