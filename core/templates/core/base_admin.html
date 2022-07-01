@@ -4,7 +4,7 @@
 <html lang="es">
     <head>
         <meta charset="UTF-8">
-        <title>TU PANEL</title>
+        <title>Sucursales</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap"
@@ -49,15 +49,15 @@
             </header>
             <div class='menu'>
                 <!--=== Menu 1 ===-->  
-                {% if template_name == '' %}
-                    <a href="" class='item active'>
+                {% if template_name == 'sucursales/sucursales_main.html' %}
+                    <a href="{% url 'sucursales_main' % }" class='item active'>
                 {% else %}
-                    <a href="" class='item'>
+                    <a href="{% url 'sucursales_main' % }" class='item'>
                 {% endif %}
                     <span class="material-icons-outlined">
                         calendar_month
                     </span>
-                    <p class='body--small'>Menu 1</p>
+                    <p class='body--small'>Sucursales</p>
                 </a>
                 <!--=== Menu 2 ===-->  
                 {% if template_name == '' %}
