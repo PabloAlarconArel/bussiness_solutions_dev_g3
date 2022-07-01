@@ -131,7 +131,7 @@ def puesto_Trabajo_list_puesto_Trabajo(request,page=None,search=None):
         page = None
     h_list = []
     if search == None or search == "None":
-        h_count = Puesto.objects.count()
+        h_count = Puesto.objects.all().count()
         h_list_array = Puesto.objects.order_by('nombre_puesto')
         for h in h_list_array:
             h_list.append({'id':h.id, 'piso_id':h.piso_id, 'nombre_puesto':h.nombre_puesto, 'capacidad_puesto':h.capacidad_puesto, 'estado':h.estado})

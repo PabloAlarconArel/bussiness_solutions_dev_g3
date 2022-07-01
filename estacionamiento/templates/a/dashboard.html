@@ -1,0 +1,97 @@
+{% extends "estacionamiento/base.html" %}
+
+{% load static %}
+
+{% block head %}
+<li class="nav-item">Dashboard </li>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid text text-center">
+  <div class="card-group">
+    <div class="card">
+      <div class="card-title">
+        Estacionamientos Disponibles
+      </div>
+      <div class="card-body">
+        <i class='bx bx-car bx-lg'> 25</i>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Reservas para hoy</div>
+      <div class="card-body"><i class='bx bx-calendar-alt bx-lg'> 18</i></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Accesos</div>
+      <div class="card-body">
+        <i class='bx bx-right-arrow-alt bx-lg'></i><i class='bx bx-left-arrow-alt bx-lg' >20</i>
+      </div>
+    </div>
+  </div>
+</div>
+
+&nbsp;
+
+<div class="container-fluid text text-center">
+  <div class="card-group">
+    <div class="card">
+      <div class="card-title">Reservas para hoy</div>
+        <div class="card-body">
+          <table class="table table-sm table-borderless">
+            <thead class="table-light">
+              <tr>
+                <th>Piso</th>
+                <th>Nombre</th>
+                <th>Origen</th>
+                <th>Matricula</th>
+                <th>Entrada</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>-2</td>
+                <td>Bryan</td>
+                <td>Web</td>
+                <td>UL-JI-75</td>
+                <td>22/04/22 19:00</td>
+                <td>
+                  <div class="container bg-success" style="border-radius: 20px; color: white;">Activo</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Accesos</div>
+        <div class="card-body">
+          <table class="table table-sm table-borderless">
+            <thead class="table-light">
+              <tr>
+                <th>Nombre</th>
+                <th>Matricula</th>
+                <th>Entrada</th>
+                <th>Caducidad</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Miguel</td>
+                <td>LT-CD-52</td>
+                <td>09/04/22 19:00</td>
+                <td>09/04/22 22:00</td>
+                <td>
+                  <div class="container bg-success" style="border-radius: 20px; color: white;">Activo</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

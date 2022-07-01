@@ -1,0 +1,81 @@
+{% extends 'estacionamiento/estacionamiento_menu.html' %}
+{% load static %}
+{% block title %}{% endblock %}
+{% block content %}
+    {% block extra_css %}    
+    {% endblock extra_css %}    
+    <header class='mb-4'>
+        <h2 class='h2 medium text-blue'>Ver Lugar</h2>
+    </header>
+    {% if messages %}
+    <ul class="messagelist">{% for message in messages %}<li>{{ message }}</li>{% endfor %}</ul>
+    {% endif %}
+    <div class="col-md-11">
+        <div class="mb-3">
+            <div class="d-flex flex-column align-items-center align-items-lg-start">
+                <form method="post" action="{% url 'estacionamiento_parking_update' parking_data.id %}">
+                    {% csrf_token %}
+                    <div class="col-12 col-lg-12 row row-cols-1 row-cols-md-1 g-2 p-lg-0-5">
+                        <div class="mb-0 col-md-12">
+                            <label for="category_name" class="form-label">Lugar</label>
+                            <input type="number" class="form-control" name="lugar" id="lugar" value="{{parking_data.lugar}}" placeholder="Lugar de estacionamiento" required readonly>
+                            <div class="feedback body--small normal"></div>
+                        </div>
+                        
+                        <div class="mb-0 col-md-12">
+                            <label for="category_name" class="form-label">Tipo de estacionamiento</label>
+                            <select name="tipo" id="tipo" class="form-select" aria-label="Default select example" selected="{{parking_data.tipo}}" required>
+                                <option selected disabled="{{parking_data.tipo}}" value="{{parking_data.tipo}}">Tipo Actual: {{parking_data.tipo}}</option>
+                                <option value="VIP">VIP</option>
+                                <option value="Colaborador">Colaborador</option>
+                                <option value="Discapacitado">Discapacitado</option>
+                                <option value="Visita">Visita</option>
+                            </select>
+                        </div>
+                        <div class="mb-0 col-md-12">
+                            <div class="d-flex justify-content-center mb-2">
+                                <div class="d-flex justify-content-center mx-0-5--custom">
+                                    <button type="submit" class="button">Actualizar</button>
+                                </div>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="button" data-bs-toggle="modal" data-bs-target="#Mimodal">
+                                    Borrar
+                                </button> 
+                                <div class="d-flex justify-content-center mx-0-5--custom">
+                                    <a href="{% url 'estacionamiento_parking_list_piso' estacionamiento.id %}" class="button">Regresar</a>
+                                </div>
+                            </div>                                  
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <body>
+        <div class="d-flex justify-content-center mx-0-5--custom">  
+            <!-- Modal -->
+            <div class="modal fade" id="Mimodal" tabindex="-1" aria-labelledby="MimodalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="MimodalLabel">¿Estás seguro de que desea borrar?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Se eliminara el parking:
+                            <li>Lugar: {{parking_data.lugar}}</li>
+                            <li>Tipo : {{parking_data.tipo}}</li>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                            <a  type="submit" href="{% url 'estacionamiento_parking_delete' parking_data.id %}" class="btn btn-danger">Borrar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    </body>
+    {% block extrajs %}    
+    {% endblock extrajs %}    
+{% endblock %}

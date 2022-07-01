@@ -9,7 +9,6 @@
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
         <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Round" rel="stylesheet">
@@ -38,12 +37,9 @@
                             </g>
                         </svg>
                     </div>
-                    <a href="">
-                        <img class="logo my-2" src="{% static 'assets/svg/award1.svg' %}" alt="logos"/>
-                    </a>
                 </div>
                 <a href="">
-                    <img class="logo my-2" src="{% static 'assets/svg/award1.svg' %}" alt="logos"/>
+                    <img class="logo my-2" src="{% static 'assets/svg/logos.svg' %}" alt="logos"/>
                 </a>
                 <div style="display: flex; flex-direction: column;align-items: center;">
                     <div class="avatar-normal-container">
@@ -52,39 +48,51 @@
                 </div>
             </header>
             <div class='menu'>
-                <!--=== Menu 1 ===-->
-                {% if template_name == 'sucursales/sucursales_main.html' %}
-                    <a href="{% url 'sucursales_main' %}" class='item active'>
-                {% else %}
-                    <a href="{% url 'sucursales_main' %}" class='item'>
-                {% endif %}
-                    <span class="material-icons-outlined">
-                        calendar_month
-                    </span>
-                    <p class='body--small'>Sucursales</p>
-                </a>
-                <!--=== Menu 2 ===-->  
+                <!--=== Menu 1 ===-->  
                 {% if template_name == 'estacionamiento/estacionamiento_main.html' %}
                     <a href="{% url 'estacionamiento_estacionamiento_main' %}" class='item active'>
                 {% else %}
                     <a href="{% url 'estacionamiento_estacionamiento_main' %}" class='item'>
                 {% endif %}
                     <span class="material-icons-outlined">
-                        manage_accounts
+                        local_parking
                     </span>
-                    <p class='body--small'>Estacionamiento</p>
+                    <p class='body--small'>Estacionamientos</p>
                 </a>
-                <!--=== Menu 3 ===-->  
-                {% if template_name == '' %}
-                    <a href="" class='item active'>
+                <!--=== Menu 2 ===-->  
+                {% if template_name == 'accesos/accesos_main.html' %}
+                    <a href="{% url 'acceso_acceso_main' %}" class='item active'>
                 {% else %}
-                    <a href="" class='item'>
+                    <a href="{% url 'acceso_acceso_main' %}" class='item'>
                 {% endif %}
                     <span class="material-icons-outlined">
-                        manage_accounts
+                        sync_alt
                     </span>
-                    <p class='body--small'>Reservas</p>
-                </a>                
+                    
+                    <p class='body--small'>Accesos</p>
+                </a>
+                <!--=== Menu 3 ===-->  
+                {% if template_name == 'visita/visita_main.html' %}
+                    <a href="{% url 'visita_visita_main' %}" class='item active'>
+                {% else %}
+                    <a href="{% url 'visita_visita_main' %}" class='item'>
+                {% endif %}
+                    <span class="material-icons-outlined">
+                        search
+                    </span>
+                    <p class='body--small'>Visitas</p>
+                </a>     
+                <!--=== Menu 4 ===-->
+                {% if template_name == 'sucursales/sucursales_main.html' %}
+                    <a href="{% url 'sucursales_master_menu' %}" class='item active'>
+                {% else %}
+                    <a href="{% url 'sucursales_master_menu' %}" class='item'>
+                {% endif %}
+                    <span class="material-icons-outlined">
+                        arrow_back
+                    </span>
+                    <p class='body--small'>Volver</p>
+                </a> 
             </div>
             <div class='side-bar-footer mb-5'>
                 <form method="post" action="{% url 'logout' %}">
@@ -93,7 +101,7 @@
                         <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
                     {% endif %}
                     <button class='button' type="submit">Cerrar Sesión</button>
-                    </form>                     
+                    </form>                    
             </div>
         </nav>
         <div class='dashboard-container'>

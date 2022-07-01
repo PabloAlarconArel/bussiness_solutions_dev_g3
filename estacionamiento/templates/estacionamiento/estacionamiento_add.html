@@ -1,0 +1,72 @@
+{% extends 'estacionamiento/estacionamiento_menu.html' %}
+{% load static %}
+{% block title %}{% endblock %}
+{% block content %}
+    {% block extra_css %}    
+    {% endblock extra_css %}    
+    <header class='mb-1'>
+        <h2 class='h2 medium text-blue'>Añadir Estacionamiento</h2>
+    </header>
+    {% if messages %}
+    <ul class="messagelist">{% for message in messages %}<li>{{ message }}</li>{% endfor %}</ul>
+    {% endif %}
+    <div class="col-md-11">
+        <div class="mb-1">
+            <div class="d-flex flex-column align-items-center align-items-lg-start">
+                <form method="post" action="{% url 'estacionamiento_estacionamiento_save' %}">
+                    {% csrf_token %}
+                    <div class="col-12 col-lg-12 row row-cols-1 row-cols-md-1 p-lg-0-2">
+                        <div class="mb-0 col-md-12">
+                            <label for="category_name" class="form-label">Sucursal</label>
+                            <input type="text" class="form-control" name="sucursal" id="sucursal" placeholder="Sucursal" required>
+                            <div class="feedback body--small normal"></div>
+                        </div>
+                        <div class="mb-0 col-md-12">
+                            <label for="category_name" class="form-label">Piso:</label>
+                            <input type="number" class="form-control" name="piso" id="piso" placeholder="Piso" required>
+                            <div class="feedback body--small normal"></div>
+                        </div>
+                        <div class="mb-0 col-md-12">
+                            <label for="category_name" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Letra Estacionamiento" required>
+                            <div class="feedback body--small normal"></div>
+                        </div>
+                        <div class="mb-0 col-md-12">
+                            <label for="category_name" class="form-label">VIP:</label>
+                            <input type="number" class="form-control" name="vip" id="vip" placeholder="Cantidad VIP" required>
+                            <div class="feedback body--small normal"></div>
+                        </div>
+                        <div class="mb-0 col-md-12">
+                            <label for="category_name" class="form-label">Colaborador:</label>
+                            <input type="number" class="form-control" name="colaborador" id="colaborador" placeholder="Cantidad Colaboradores" required>
+                            <div class="feedback body--small normal"></div>
+                        </div>
+                        <div class="mb-0 col-md-12">
+                            <label for="category_name" class="form-label">Discapacitados:</label>
+                            <input type="number" class="form-control" name="discapacitado" id="discapacitado" placeholder="Cantidad Discapacitados" required>
+                            <div class="feedback body--small normal"></div>
+                        </div>
+                        <div class="mb-0 col-md-12">
+                            <label for="category_name" class="form-label">Visitas:</label>
+                            <input type="number" class="form-control" name="visita" id="visita" placeholder="Cantidad Visitas" required>
+                            <div class="feedback body--small normal"></div>
+                        </div>
+
+                        <div class="mb-0 col-md-12">
+                            <div class="d-flex justify-content-center mb-2">
+                                <div class="d-flex justify-content-center mx-0-5--custom">
+                                    <button type="submit" class="button">Crear</button>
+                                </div>
+                                <div class="d-flex justify-content-center mx-0-5--custom">
+                                    <a href="{% url 'estacionamiento_estacionamiento_list' %}" class="button">Regresa</a>
+                                </div>  
+                            </div>                                  
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% block extrajs %}    
+    {% endblock extrajs %}    
+{% endblock %}

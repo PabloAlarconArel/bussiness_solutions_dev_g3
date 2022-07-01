@@ -1,0 +1,48 @@
+{% extends "estacionamiento/base.html" %}
+
+{% load static %}
+
+{% block head %}
+  <li class="nav-item">
+    Reservas
+  </li>
+  
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid text text-center">
+  <div class="card">
+    <div class="card-title">
+      <h3>Reservas</h3>
+    </div>
+    <div class="card-body">
+      <table class="table table-sm table-borderless">
+        <thead class="table-light">
+          <tr>
+            <th>Nombre</th>
+            <th>Piso</th>
+            <th>Ubicacion</th>
+            <th>Origen</th>
+            <th>Matricula</th>
+            <th>Entrada</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Diego</td>
+            <td>-4</td>
+            <td>K-18</td>
+            <td>Reserva</td>
+            <td>LT-CD-52</td>
+            <td>09/04/22 19:00</td>
+            <td>
+              <div class="container bg-success" style="border-radius: 20px; color: white;">Activo</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
