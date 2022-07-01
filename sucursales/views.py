@@ -20,13 +20,22 @@ from rest_framework.views import APIView
 from sucursales.models import Sucursal
 
 @login_required
+def sucursales_master_menu(request):
+    profile = Profile.objects.get(user_id=request.user.id)
+    if profile.group_id != 1:
+        messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
+        return redirect('check_group_main')
+    template_name = 'sucursales/sucursales_master_menu.html'
+    return render(request,template_name,{'profile':profile, 'template_name' : 'sucursales/sucursales_master_menu.html'})
+
+@login_required
 def sucursales_main(request):
     profile = Profile.objects.get(user_id=request.user.id)
     if profile.group_id != 1:
         messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
         return redirect('check_group_main')
     template_name = 'sucursales/sucursales_main.html'
-    return render(request,template_name,{'profile':profile})
+    return render(request,template_name,{'profile':profile, 'template_name': 'sucursales/sucursales_main.html'})
 
 @login_required
 def sucursales_sucursal_add(request):
@@ -35,7 +44,7 @@ def sucursales_sucursal_add(request):
         messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
         return redirect('check_group_main')
     template_name = 'sucursales/sucursales_add.html'
-    return render(request,template_name,{'profile':profile})
+    return render(request,template_name,{'profile':profile, 'template_name': 'sucursales/sucursales_main.html'})
 
 @login_required
 def sucursales_sucursal_save(request):
@@ -104,7 +113,7 @@ def sucursales_sucursal_ver(request,sucursal_id):
         return redirect('check_group_main')
     sucursal_data = Sucursal.objects.get(pk=sucursal_id)
     template_name = 'sucursales/sucursales_sucursal_ver.html'
-    return render(request,template_name,{'profile':profile,'sucursal_data':sucursal_data})
+    return render(request,template_name,{'profile':profile,'sucursal_data':sucursal_data, 'template_name': 'sucursales/sucursales_main.html'})
 
 @login_required
 def sucursales_list_sucursales(request,page=None,search=None):
@@ -145,7 +154,7 @@ def sucursales_list_sucursales(request,page=None,search=None):
     paginator = Paginator(h_list, 10) 
     h_list_paginate= paginator.get_page(page)   
     template_name = 'sucursales/sucursales_list_sucursales.html'
-    return render(request,template_name,{'template_name':template_name,'h_list_paginate':h_list_paginate,'paginator':paginator,'page':page})
+    return render(request,template_name,{'template_name':template_name,'h_list_paginate':h_list_paginate,'paginator':paginator,'page':page, 'template_name': 'sucursales/sucursales_main.html'})
 
 @api_view(['POST'])
 def sucursales_sucursal_add_rest(request, format=None):    

@@ -27,7 +27,7 @@ def puesto_Trabajo_main(request):
         messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
         return redirect('check_group_main')
     template_name = 'puesto_Trabajo/puesto_Trabajo_main.html'
-    return render(request,template_name,{'profile':profile})
+    return render(request,template_name,{'profile':profile, 'template_name': 'puesto_Trabajo/puesto_Trabajo_main.html'})
 
 
 @login_required
