@@ -131,13 +131,13 @@ def puesto_Trabajo_list_puesto_Trabajo(request,page=None,search=None):
         page = None
     h_list = []
     if search == None or search == "None":
-        h_count = Puesto.objects.filter(estado='Activo').count()
-        h_list_array = Puesto.objects.filter(estado='Activo').order_by('nombre_puesto')
+        h_count = Puesto.objects.count()
+        h_list_array = Puesto.objects.order_by('nombre_puesto')
         for h in h_list_array:
             h_list.append({'id':h.id, 'piso_id':h.piso_id, 'nombre_puesto':h.nombre_puesto, 'capacidad_puesto':h.capacidad_puesto, 'estado':h.estado})
     else:
-        h_count = Puesto.objects.filter(estado='Activo').filter(nombre_puesto__icontains=search).count()
-        h_list_array = Puesto.objects.filter(estado='Activo').filter(nombre_puesto__icontains=search).order_by('nombre_puesto')
+        h_count = Puesto.objects.filter(nombre_puesto__icontains=search).count()
+        h_list_array = Puesto.objects.filter(nombre_puesto__icontains=search).order_by('nombre_puesto')
         for h in h_list_array:
             h_list.append({'id':h.id, 'piso_id':h.piso_id, 'nombre_puesto':h.nombre_puesto, 'capacidad_puesto':h.capacidad_puesto, 'estado':h.estado})        
     paginator = Paginator(h_list, 5) 
@@ -186,10 +186,10 @@ def puesto_trabajo_puesto_list_rest(request, format=None):
 @api_view(['POST'])
 def puesto_trabajo_puesto_update_element_rest(request, format=None):
     if request.method == 'POST':
-        puesto_id = request.data['puesto_id']
-        nombre_puesto= request.data['nombre_puesto']
-        capacidad_puesto = request.data['capacidad_puesto']
-        estado = request.data['estado']
+        puesto_id = request.POST['puesto_id']
+        nombre_puesto= request.POST['nombre_puesto']
+        capacidad_puesto = request.POST['capacidad_puesto']
+        estado = request.POST['estado']
         Puesto.objects.filter(pk = puesto_id).update(nombre_puesto = nombre_puesto)
         Puesto.objects.filter(pk = puesto_id ).update(capacidad_puesto= capacidad_puesto)
         Puesto.objects.filter(pk = puesto_id ).update(estado = estado)
