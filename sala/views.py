@@ -26,7 +26,7 @@ def salas_main(request):
         messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
         return redirect('check_group_main')
     template_name = 'salas/salas_main.html'
-    return render(request, template_name, {'profile':profile})
+    return render(request, template_name, {'profile':profile , 'template_name': 'salas/salas_main.html'})
 
 
 @login_required
@@ -36,7 +36,7 @@ def salas_sala_add(request):
         messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
         return redirect('check_group_main')
     template_name = 'salas/salas_add.html'
-    return render(request, template_name, {'profile':profile})
+    return render(request, template_name, {'profile':profile , 'template_name': 'salas/salas_main.html'})
 
 
 @login_required
@@ -73,7 +73,7 @@ def salas_sala_ver(request,sala_id):
         return redirect('check_group_main')
     sala_data = Sala.objects.get(pk=sala_id)
     template_name = 'salas/salas_sala_ver.html'
-    return render(request, template_name, {'profile':profile, 'sala_data':sala_data})
+    return render(request, template_name, {'profile':profile, 'sala_data':sala_data , 'template_name': 'salas/salas_main.html'})
 
 @login_required
 def salas_list_salas(request, page = None, search = None):

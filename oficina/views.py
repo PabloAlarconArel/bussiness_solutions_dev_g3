@@ -24,7 +24,7 @@ def oficinas_main(request):
         messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
         return redirect('check_group_main')
     template_name = 'oficinas/oficinas_main.html'
-    return render(request,template_name,{'profile':profile})
+    return render(request,template_name,{'profile':profile , 'template_name': 'oficinas/oficinas_main.html'})
 
 
 @login_required
@@ -34,7 +34,7 @@ def oficinas_oficina_add(request):
         messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
         return redirect('check_group_main')
     template_name = 'oficinas/oficinas_add.html'
-    return render(request,template_name,{'profile':profile})
+    return render(request,template_name,{'profile':profile, 'template_name': 'oficinas/oficinas_main.html'})
 
 
 @login_required
@@ -71,7 +71,7 @@ def oficinas_oficina_ver(request,oficina_id):
         return redirect('check_group_main')
     oficina_data = Oficina.objects.get(pk=oficina_id)
     template_name = 'oficinas/oficinas_oficina_ver.html'
-    return render(request,template_name,{'profile':profile,'oficina_data':oficina_data})
+    return render(request,template_name,{'profile':profile,'oficina_data':oficina_data, 'template_name': 'oficinas/oficinas_main.html'})
 
 @login_required
 def oficinas_list_oficinas(request,page=None,search=None):
