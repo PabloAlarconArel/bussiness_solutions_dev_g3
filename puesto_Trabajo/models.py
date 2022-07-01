@@ -15,4 +15,4 @@ class Puesto(models.Model):
         verbose_name_plural = 'Puestos'
         ordering = ['nombre_puesto']   
     def __str__(self):
-        return self.nombre_puesto
+        return self.nombre_puesto 
