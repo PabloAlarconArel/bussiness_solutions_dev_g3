@@ -8,6 +8,7 @@ sucursales_urlpatterns = [
     path('sucursales_sucursal_delete/<sucursal_id>',views.sucursales_sucursal_delete,name="sucursales_sucursal_delete"),
     path('sucursales_sucursal_update/',views.sucursales_sucursal_update,name="sucursales_sucursal_update"),
     path('sucursales_main/',views.sucursales_main,name="sucursales_main"),
+    path('sucursales_master_menu/',views.sucursales_master_menu,name="sucursales_master_menu"),
     path('sucursales_sucursal_add/',views.sucursales_sucursal_add,name="sucursales_sucursal_add"),
     path('sucursales_sucursal_save/',views.sucursales_sucursal_save,name="sucursales_sucursal_save"),
     path('sucursales_sucursal_ver/<sucursal_id>/',views.sucursales_sucursal_ver,name="sucursales_sucursal_ver"),

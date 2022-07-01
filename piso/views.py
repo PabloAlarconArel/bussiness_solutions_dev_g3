@@ -29,7 +29,7 @@ def pisos_piso_main(request):
         messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
         return redirect('check_group_main')
     template_name = 'piso/pisos_main.html'
-    return render(request,template_name,{'profile':profile})
+    return render(request,template_name,{'profile':profile, 'template_name': 'piso/pisos_main.html'})
 
 @login_required
 def pisos_piso_add(request):
@@ -38,7 +38,7 @@ def pisos_piso_add(request):
         messages.add_message(request, messages.INFO, 'Intenta ingresar a una area para la que no tiene permisos')
         return redirect('check_group_main')
     template_name = 'piso/pisos_add.html'
-    return render(request,template_name,{'profile':profile})
+    return render(request,template_name,{'profile':profile, 'template_name': 'piso/pisos_main.html'})
 
 @login_required
 def pisos_piso_save(request):
@@ -108,7 +108,7 @@ def pisos_list_piso(request,page=None,search=None):
     paginator = Paginator(h_list, 10) 
     h_list_paginate= paginator.get_page(page)   
     template_name = 'piso/pisos_list.html'
-    return render(request,template_name,{'template_name':template_name,'h_list_paginate':h_list_paginate,'paginator':paginator,'page':page,'search':search})
+    return render(request,template_name,{'template_name':template_name,'h_list_paginate':h_list_paginate,'paginator':paginator,'page':page,'search':search, 'template_name': 'piso/pisos_main.html'})
 
 @login_required
 def pisos_piso_ver(request,id):
@@ -118,7 +118,7 @@ def pisos_piso_ver(request,id):
         return redirect('check_group_main')
     piso_data = Piso.objects.get(pk=id)
     template_name = 'piso/pisos_ver.html'
-    return render(request,template_name,{'profile':profile,'piso_data':piso_data})
+    return render(request,template_name,{'profile':profile,'piso_data':piso_data, 'template_name': 'piso/pisos_main.html'})
 
 @login_required
 def pisos_piso_update(request):
