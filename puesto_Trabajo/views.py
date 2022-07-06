@@ -140,7 +140,7 @@ def puesto_Trabajo_list_puesto_Trabajo(request,page=None,search=None):
         h_list_array = Puesto.objects.filter(nombre_puesto__icontains=search).order_by('nombre_puesto')
         for h in h_list_array:
             h_list.append({'id':h.id, 'piso_id':h.piso_id, 'nombre_puesto':h.nombre_puesto, 'capacidad_puesto':h.capacidad_puesto, 'estado':h.estado})        
-    paginator = Paginator(h_list, 5) 
+    paginator = Paginator(h_list, 1) 
     h_list_paginate= paginator.get_page(page)   
     template_name = 'puesto_Trabajo/puesto_Trabajo_list_puesto_Trabajo.html'
     return render(request,template_name,{'template_name':template_name,'h_list_paginate':h_list_paginate,'paginator':paginator,'page':page})
