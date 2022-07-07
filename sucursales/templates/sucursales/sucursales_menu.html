@@ -111,9 +111,20 @@
                     <a href="{% url 'sucursales_master_menu' %}" class='item'>
                 {% endif %}
                     <span class="material-icons-outlined">
-                        arrow_back
+                        reply
                     </span>
                     <p class='body--small'>Volver</p>
+                </a>
+                <!--=== Volver ===-->
+                {% if template_name == '' %}
+                    <a href="{% url 'ejemplos_main' %}" class='item active'>
+                {% else %}
+                    <a href="{% url 'ejemplos_main' %}" class='item'>
+                {% endif %}
+                    <span class="material-icons-outlined">
+                        reply
+                    </span>
+                    <p class='body--small'>Menú Principal</p>
                 </a>                 
             </div>
             <div class='side-bar-footer mb-5'>  
