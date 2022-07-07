@@ -29,9 +29,13 @@
                             <div class="feedback body--small normal"></div>
                         </div>
                         <div class="mb-0 col-md-12">
-                            <label for="category_description" class="form-label">Tipo del piso</label>
-                            <input type="text" class="form-control" name="tipo" id="tipo" placeholder="Tipo" required>
-                            <div class="feedback body--small normal"></div>
+                            <label for="category_name" class="form-label">Tipo del piso</label>
+                            <select name="tipo" id="tipo" class="form-select" aria-label="Default select example" required>
+                                <option selected disabled="">Seleccione una opcion</option>
+                                <option value="Estacionamiento">Estacionamiento</option>
+                                <option value="Oficina">Oficina</option>
+                                <option value="Sala reunion">Sala reunion</option>
+                            </select>
                         </div>
                         <div class="mb-0 col-md-12">
                             <div class="d-flex justify-content-center mb-2">
