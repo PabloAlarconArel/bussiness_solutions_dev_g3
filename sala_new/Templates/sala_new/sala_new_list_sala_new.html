@@ -15,10 +15,12 @@
     <div class="d-flex flex-column flex-lg-row my-5">
         <div class="my-auto d-flex flex-column flex-lg-row ms-lg-auto">
             <div class="feedback body--small normal"></div>
-        </div>
+        <div class="d-flex justify-content-center mx-0-5--custom">
+            <a href="{% url 'sala_new_main' %}" class="button">Regresa</a>
+        </div>   
         <form method="post" action="" class='col-12 col-lg-6 input-container-search my-auto me-3'>
             {% csrf_token %}
-            <input name="search" id="search" type="text" placeholder='Buscar por Sala'/>
+            <input name="search" id="search" type="text" placeholder='Buscar por nombre de Sala'/>
         <form>       
     </div>
     <div class="table-container mt-5">
@@ -38,11 +40,11 @@
                     <tr>
                         <td>{{s.id}}</td>
                         <td>{{s.piso_id}}</td>
-                        <td>{{s.nombre_sala_r}}</td>
-                        <td>{{s.capacidad_sala_r}}</td>
+                        <td>{{s.nombre_sala}}</td>
+                        <td>{{s.capacidad_sala}}</td>
                         <td>{{s.estado}}</td>
                         <td>
-                            <a href="{% url 'salas_sala_ver' s.id %}">Ver</a>
+                            <a href="{% url 'sala_new_sala_ver' s.id %}">Ver</a>
                         </td>
                     </tr>
                 {% endfor %}
