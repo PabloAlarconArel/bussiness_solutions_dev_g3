@@ -12,6 +12,9 @@
             </p>
         </div>
     </header>
+    {% if messages %}
+    <ul class="messagelist">{% for message in messages %}<li>{{ message }}</li>{% endfor %}</ul>
+    {% endif %}
     <div class="d-flex flex-column flex-lg-row my-5">
         <div class="my-auto d-flex flex-column flex-lg-row ms-lg-auto">
             <div class="feedback body--small normal"></div>
@@ -87,6 +90,7 @@
             {% endif %}  
         <!-- Paginación -->    
     </div>
+    
 
 
 
