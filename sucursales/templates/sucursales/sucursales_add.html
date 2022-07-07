@@ -24,9 +24,12 @@
                             <div class="feedback body--small normal"></div>
                         </div>
                         <div class="mb-0 col-md-12">
-                            <label for="category_description" class="form-label">Estado</label>
-                            <input type="text" class="form-control" name="estado" id="estado" placeholder="Estado" required>
-                            <div class="feedback body--small normal"></div>
+                            <label for="category_name" class="form-label">Estado de la sucursal</label>
+                            <select name="estado" id="estado" class="form-select" aria-label="Default select example" required>
+                                <option selected disabled="">Seleccione una opcion</option>
+                                <option value="Activo">Activo</option>
+                                <option value="Inactivo">Inactivo</option>
+                            </select>
                         </div>
                         <div class="mb-0 col-md-12">
                             <label for="category_description" class="form-label">Direccion</label>
