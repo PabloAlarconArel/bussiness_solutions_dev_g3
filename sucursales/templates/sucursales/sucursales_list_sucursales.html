@@ -1,5 +1,6 @@
 {% extends 'sucursales/sucursales_menu.html' %}
 {% load static %}
+{% load mathfilters %}
 {% block title %}{% endblock %}
 {% block content %}
     {% block extra_css %}    
@@ -71,9 +72,15 @@
                                 </li>                        
                             {% endif %}
                             {% for i in paginator.page_range %}
-                                <li class="page-item {% if h_list_paginate.number == i %}active{% endif %}">
-                                    <a class="page-link" href="?page={{ i }}&search={{search}}">{{ i }}</a>
-                                </li>                        
+                                {% if i >= page|sub:1 and page|add:3 > i %}
+                                    <li class="page-item {% if h_list_paginate.number == i %}active{% endif %}">
+                                        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item {% if h_list_paginate.number == i %}active{% endif %}">
+                                        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                                    </li>
+                                {% endif %}                            
                             {% endfor %}
                             {% if h_list_paginate.has_next %}
                                 <li class="page-item ">

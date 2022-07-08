@@ -68,7 +68,7 @@ def sucursales_sucursal_save(request):
             )
         sucursal_save.save()
         messages.add_message(request, messages.INFO, 'Sucursal ingresada con éxito')
-        return redirect('sucursales_list_sucursales')
+        return redirect('sucursales_sucursal_add')
     else:
         messages.add_message(request, messages.INFO, 'Error en el método de envío')
         return redirect('check_group_main')
@@ -148,7 +148,7 @@ def sucursales_list_sucursales(request,page=None,search=None):
             h_list.append({'id':h.id,'name':h.name,'estado':h.estado, 'contact':h.contact, 'address' :h.address})
     else:
         h_count = Sucursal.objects.filter(name__icontains=search).count()
-        h_list_array = Sucursal.objects.filter(name__icontains=search).order_by('name')
+        h_list_array = Sucursal.objects.filter(name__icontains=search).order_by('id')
         for h in h_list_array:
             h_list.append({'id':h.id,'name':h.name,'estado':h.estado, 'contact':h.contact, 'address' :h.address})         
     paginator = Paginator(h_list, 1) 
