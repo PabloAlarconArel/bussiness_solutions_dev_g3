@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group, User #importa los modelos Group y 
 from piso.models import Piso
 
 class Puesto(models.Model):
-    piso = models.ForeignKey(Piso,on_delete=CASCADE) 
+    piso = models.ForeignKey(Piso,on_delete=models.CASCADE) 
     nombre_puesto = models.CharField(max_length=100, null=True, blank=True, verbose_name='Nombre puesto de trabajo')
     capacidad_puesto = models.IntegerField(null=True, default=0, blank=True, verbose_name='Capacidad puesto trabajo')
     estado = models.CharField(max_length=100, null=True, blank=True, default='Activo', verbose_name='Estado')   
