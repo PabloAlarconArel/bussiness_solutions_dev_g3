@@ -151,7 +151,7 @@ def sucursales_list_sucursales(request,page=None,search=None):
         h_list_array = Sucursal.objects.filter(name__icontains=search).order_by('name')
         for h in h_list_array:
             h_list.append({'id':h.id,'name':h.name,'estado':h.estado, 'contact':h.contact, 'address' :h.address})         
-    paginator = Paginator(h_list, 10) 
+    paginator = Paginator(h_list, 1) 
     h_list_paginate= paginator.get_page(page)   
     template_name = 'sucursales/sucursales_list_sucursales.html'
     return render(request,template_name,{'template_name':template_name,'h_list_paginate':h_list_paginate,'paginator':paginator,'page':page, 'template_name': 'sucursales/sucursales_main.html'})

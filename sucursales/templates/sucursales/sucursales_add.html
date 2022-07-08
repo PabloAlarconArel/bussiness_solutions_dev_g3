@@ -7,6 +7,9 @@
     <header class='mb-4'>
         <h2 class='h2 medium text-blue'>Nueva Sucursal</h2>
     </header>
+    {% if messages %}
+    <ul class="messagelist">{% for message in messages %}<li>{{ message }}</li>{% endfor %}</ul>
+    {% endif %}
     <div class="col-md-11">
         <div class="mb-3">
             <div class="d-flex flex-column align-items-center align-items-lg-start">
